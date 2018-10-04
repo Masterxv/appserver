@@ -24,6 +24,8 @@ Route::group(['prefix'=>'student'], function() {
     Route::post('verify-code', 'StudentController@verifyCode');
     Route::post('new-password', 'StudentController@newPassword');
     Route::post('send-code', 'StudentController@sendCode');
+    Route::post('edit-profile', 'StudentController@editProfile');
+    Route::post('upload-image', 'StudentController@upload');
 });
 
 Route::group(['prefix'=>'ustad'], function() {

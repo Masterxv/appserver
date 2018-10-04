@@ -6,7 +6,9 @@ use App\Student;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Hash, Config;
+use Hash, Config, Image,File;
+use Illuminate\Support\Facades\Storage;
+
 
 use Illuminate\Support\Facades\Auth;
 
@@ -58,6 +60,7 @@ class StudentController extends Controller
 
     public function register(Request $request)
     {
+        $student = new Student();
         $rules = [
             'name' => 'required',
             'email' => 'required|email|unique:students',
@@ -70,11 +73,10 @@ class StudentController extends Controller
 
             return response()->json([
                 'error' => ['code' => 302, 'message' => $validator->messages()->first()],
-                'user' => "",
+                'user' => $student,
             ], Response::HTTP_OK);
 
         }
-        $student = new Student();
         $student->name = $request->name;
         $student->email = $request->email;
         $student->password = md5($request->password);
@@ -123,7 +125,6 @@ class StudentController extends Controller
 
             return response()->json([
                 'error' => ['code' => 302, 'message' => $validation->messages()->first()],
-                'user' => "",
             ], Response::HTTP_OK);
 
         }
@@ -135,7 +136,6 @@ class StudentController extends Controller
         if (is_null($student)) {
             return response()->json([
                 'error' => ['code' => 302, 'message' => "Wrong password"],
-                'user' => "",
             ], Response::HTTP_OK);
         }
 
@@ -170,7 +170,6 @@ class StudentController extends Controller
 
             return response()->json([
                 'error' => ['code' => 302, 'message' => $validation->messages()->first()],
-                'user' => "",
             ], Response::HTTP_OK);
 
         }
@@ -209,7 +208,6 @@ class StudentController extends Controller
 
             return response()->json([
                 'error' => ['code' => 302, 'message' => $validation->messages()->first()],
-                'user' => "",
             ], Response::HTTP_OK);
 
         }
@@ -242,7 +240,6 @@ class StudentController extends Controller
 
             return response()->json([
                 'error' => ['code' => 302, 'message' => "Invalid email"],
-                'user' => "",
             ], Response::HTTP_OK);
 
         }
@@ -274,9 +271,81 @@ class StudentController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function editProfile(Request $request)
     {
-        //
+        $credentials = [
+            'email' => $request->email,
+        ];
+
+
+        $rules = [
+            'email' => 'exists:students'
+        ];
+
+        $rules = [
+//            'name' => 'required',
+            'email' => 'exists:students'
+//            ,
+//            'username' => 'required|exists:students',
+//            'password' => 'required'
+        ];
+
+
+        $validation = Validator::make($request->only('email'), $rules);
+
+        if ($validation->fails()) {
+
+            return response()->json([
+                'error' => ['code' => 302, 'message' => "Invalid email"],
+            ], Response::HTTP_OK);
+
+        }
+
+        $student = student::select('*')
+            ->where('email', '=', $request->email)
+            ->get()->first();
+
+        if (!is_null($request->newEmail)) {
+            $student1 = student::select('*')
+                ->where('email', '=', $request->newEmail)
+                ->get()->first();
+
+            if (is_null($student1)) {
+                $student->email = $request->newEmail;
+            } else {
+                return response()->json([
+                    'error' => ['code' => Response::HTTP_OK, 'message' => "Email already taken"],
+                    'user' => $student,
+                ], Response::HTTP_OK);
+            }
+        }
+        if (!is_null($request->newUsername)) {
+            $student2 = student::select('*')
+                ->where('username', '=', $request->newUsername)
+                ->get()->first();
+
+            if (is_null($student2)) {
+                $student->username = $request->newUsername;
+            } else {
+                return response()->json([
+                    'error' => ['code' => Response::HTTP_OK, 'message' => "Username already taken"],
+                    'user' => $student,
+                ], Response::HTTP_OK);
+            }
+
+        }
+        $student->password = $request->password;
+        $student->phone = $request->phone;
+        $student->birthday = $request->birthday;
+        $student->address = $request->address;
+
+        $student->update();
+
+
+        return response()->json([
+            'error' => ['code' => Response::HTTP_OK, 'message' => "Code sent"],
+            'user' => $student,
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -285,8 +354,48 @@ class StudentController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function upload(Request $request)
     {
-        //
+        $student = student::select('*')
+            ->where('email', '=', $request->email)
+            ->get()->first();
+
+
+        $file_data      = $request->logo;
+
+        $customers_path = public_path().'/uploads/customers/';
+        $specified_customer_path = 'uploads/customers/'.$student->email;
+        if(!Storage::disk('public')->has($specified_customer_path.'/logo')){
+            $path = $customers_path.$student->email.'/logo';
+            if (!file_exists($path)) {
+                mkdir($path, 0775, true);
+            }
+
+        }
+        $full_path = $customers_path.$student->email.'/logo/'.md5(microtime()).".jpg";
+        $url = $this->upload_image($file_data,$student->email,$full_path);
+        $url = url('/').'/'.$specified_customer_path.'/logo/'.basename($url);
+        $student->logo = $url;
+        $student->save();
+
+
+        $student->update();
+
+
+        return response()->json([
+            'http-status' => Response::HTTP_OK,
+            'status' => true,
+            'message' => 'success',
+            'student'=>$student,
+            'body' => ['profile_picture' => ""]
+        ], Response::HTTP_OK);
+    }
+
+    public function upload_image($file_data, $customer_id, $full_path)
+    {
+        $file = fopen($full_path, "wb");
+        fwrite($file, base64_decode($file_data));
+        fclose($file);
+        return $full_path;
     }
 }
