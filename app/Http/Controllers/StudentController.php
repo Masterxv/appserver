@@ -6,7 +6,7 @@ use App\Student;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Hash, Config, Image,File;
+use Hash, Config, Image, File;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -361,40 +361,64 @@ class StudentController extends Controller
             ->get()->first();
 
 
-        $file_data      = $request->logo;
+        if ($request->hasFile('logo')) {
+            $image = $request->file('logo');
+            $name =  md5(microtime());
+            $customers_path = public_path().'/uploads/customers/';
+            $specified_customer_path = 'uploads/customers/'.$student;
+            if(!Storage::disk('public')->has($specified_customer_path.'/logo')){
+//                $path = $customers_path.$student->email.'/logo';
+//                if (!file_exists($path)) {
+//                    mkdir($path, 0775, true);
+//                }
 
-        $customers_path = public_path().'/uploads/customers/';
-        $specified_customer_path = 'uploads/customers/'.$student->email;
-        if(!Storage::disk('public')->has($specified_customer_path.'/logo')){
-            $path = $customers_path.$student->email.'/logo';
-            if (!file_exists($path)) {
-                mkdir($path, 0775, true);
             }
+//            $destinationPath = public_path('/uploads/articles');
+//            $imagePath =  "/" . $name . ".png";
+            $image->move($customers_path, $name . ".png");
+//            $full_path = $imagePath  . '/logo/' . md5(microtime());
+
+            $url = url('/')   . '/uploads/customers/' . basename($name . ".png");
+            $student->logo = $url;
+            $student->update();
 
         }
-        $full_path = $customers_path.$student->email.'/logo/'.md5(microtime()).".jpg";
-        $url = $this->upload_image($file_data,$student->email,$full_path);
-        $url = url('/').'/'.$specified_customer_path.'/logo/'.basename($url);
-        $student->logo = $url;
-        $student->save();
 
 
-        $student->update();
+        $file_data      = $request->logo;
+
+//        $customers_path = public_path().'/uploads/customers/';
+//        $specified_customer_path = 'uploads/customers/'.$student->email;
+//        if(!Storage::disk('public')->has($specified_customer_path.'/logo')){
+//            $path = $customers_path.$student->email.'/logo';
+//            if (!file_exists($path)) {
+//                mkdir($path, 0775, true);
+//            }
+//
+//        }
+//        $full_path = $customers_path.$student->email.'/logo/'.md5(microtime()).".jpg";
+//        $url = $this->upload_image($file_data,$student->email,$full_path);
+//        $url = url('/').'/'.$specified_customer_path.'/logo/'.basename($url);
+//        $student->logo = $url;
+//        $student->save();
+//
+//
+//        $student->update();
 
 
         return response()->json([
             'http-status' => Response::HTTP_OK,
             'status' => true,
             'message' => 'success',
-            'student'=>$student,
-            'body' => ['profile_picture' => ""]
+            'student' => $student,
+            'body' => ['profile_picture' => $url]
         ], Response::HTTP_OK);
     }
 
     public function upload_image($file_data, $customer_id, $full_path)
     {
         $file = fopen($full_path, "wb");
-        fwrite($file, base64_decode($file_data));
+        fwrite($file, $file_data);
         fclose($file);
         return $full_path;
     }
