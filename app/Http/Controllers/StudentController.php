@@ -131,21 +131,20 @@ class StudentController extends Controller
         $student = student::select('*')
             ->where('email', '=', $request->email)
             ->where('password', '=', md5($request->password))
-            ->get();
+            ->get()->first();
 
-if ($student->count())
-{
-        return response()->json([
-            'error' => ['code' => Response::HTTP_OK, 'message' => false],
-            'user' => $student->first(),
-        ], Response::HTTP_OK);
+        if ($student->count()) {
+            return response()->json([
+                'error' => ['code' => Response::HTTP_OK, 'message' => false],
+                'user' => $student->first(),
+            ], Response::HTTP_OK);
 
-        }else{
+        } else {
 
             return response()->json([
                 'error' => ['code' => 302, 'message' => "Wrong password"],
             ], Response::HTTP_OK);
-}
+        }
 
     }
 
@@ -164,11 +163,11 @@ if ($student->count())
 
         $rules = [
             'email' => 'exists:students',
-              'code' => 'required'
+            'code' => 'required'
 
         ];
 
-        $validation = Validator::make($request->only('email','code'), $rules);
+        $validation = Validator::make($request->only('email', 'code'), $rules);
 
         if ($validation->fails()) {
 
@@ -181,18 +180,17 @@ if ($student->count())
         $student = student::select('*')
             ->where('email', '=', $request->email)
             ->where('code', '=', $request->code)
-            ->get();
+            ->get()->first();
 
-            if ($student->count())
-{
+        if ($student->count()) {
 
-        return response()->json([
-            'error' => ['code' => Response::HTTP_OK, 'message' => false],
-            'user' => $student->first(),
-        ], Response::HTTP_OK);
+            return response()->json([
+                'error' => ['code' => Response::HTTP_OK, 'message' => false],
+                'user' => $student->first(),
+            ], Response::HTTP_OK);
 
-        }else{
-                        return response()->json([
+        } else {
+            return response()->json([
                 'error' => ['code' => 302, 'message' => "Code is Wrong"],
             ], Response::HTTP_OK);
         }
@@ -333,7 +331,7 @@ if ($student->count())
                 $student->username = $request->newUsername;
             } else {
                 return response()->json([
-                    'error' => ['code' => "302" ,'message' => "Username already taken"],
+                    'error' => ['code' => "302", 'message' => "Username already taken"],
                 ], Response::HTTP_OK);
             }
 
@@ -384,10 +382,6 @@ if ($student->count())
         }
 
 
-
-
-
-
         $student = student::select('*')
             ->where('email', '=', $request->email)
             ->get()->first();
@@ -395,70 +389,32 @@ if ($student->count())
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $name =  md5(microtime());
-            $customers_path = public_path().'/uploads/customers/';
-            $specified_customer_path = 'uploads/customers/'.$student;
-            if(!Storage::disk('public')->has($specified_customer_path.'/image')){
-//                $path = $customers_path.$student->email.'/logo';
-//                if (!file_exists($path)) {
-//                    mkdir($path, 0775, true);
-//                }
+            $name = md5(microtime());
+            $customers_path = public_path() . '/uploads/customers/';
+            $specified_customer_path = 'uploads/customers/' . $student;
+            if (!Storage::disk('public')->has($specified_customer_path . '/image')) {
+
 
             }
-//            $destinationPath = public_path('/uploads/articles');
-//            $imagePath =  "/" . $name . ".png";
-            $image->move($customers_path, $name . ".png");
-//            $full_path = $imagePath  . '/logo/' . md5(microtime());
 
-            $url = url('/')   . '/uploads/customers/' . basename($name . ".png");
+            $image->move($customers_path, $name . ".png");
+
+            $url = url('/') . '/uploads/customers/' . basename($name . ".png");
             $student->logo = $url;
             $student->update();
 
-        }else{
-             return response()->json([
-                    'error' => ['code' => Response::HTTP_OK, 'message' => "Image is null"],
-                ], Response::HTTP_OK);
+        } else {
+            return response()->json([
+                'error' => ['code' => Response::HTTP_OK, 'message' => "Image is null"],
+            ], Response::HTTP_OK);
         }
 
-
-        // $file_data      = $request->logo;
-
-//        $customers_path = public_path().'/uploads/customers/';
-//        $specified_customer_path = 'uploads/customers/'.$student->email;
-//        if(!Storage::disk('public')->has($specified_customer_path.'/logo')){
-//            $path = $customers_path.$student->email.'/logo';
-//            if (!file_exists($path)) {
-//                mkdir($path, 0775, true);
-//            }
-//
-//        }
-//        $full_path = $customers_path.$student->email.'/logo/'.md5(microtime()).".jpg";
-//        $url = $this->upload_image($file_data,$student->email,$full_path);
-//        $url = url('/').'/'.$specified_customer_path.'/logo/'.basename($url);
-//        $student->logo = $url;
-//        $student->save();
-//
-//
-//        $student->update();
-   return response()->json([
+        return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => "Image successfully updated"],
             'user' => $student,
         ], Response::HTTP_OK);
 
-        // return response()->json([
-        //     'http-status' => Response::HTTP_OK,
-        //     'status' => true,
-        //     'message' => 'success',
-        //     'student' => $student,
-        //     'body' => ['profile_picture' => $url]
-        // ], Response::HTTP_OK);
     }
 
-    public function upload_image($file_data, $customer_id, $full_path)
-    {
-        $file = fopen($full_path, "wb");
-        fwrite($file, $file_data);
-        fclose($file);
-        return $full_path;
-    }
+
 }

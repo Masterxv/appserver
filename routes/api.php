@@ -29,7 +29,12 @@ Route::group(['prefix'=>'student'], function() {
 });
 
 Route::group(['prefix'=>'ustad'], function() {
-//    Route::post('register', 'StudentController@register');
-//    Route::post('login', 'StudentController@login');
-//    Route::post('recover', 'StudentController@recover');
+    Route::post('register', 'UstadController@register');
+    Route::post('login', 'UstadController@login');
+    Route::post('recover', 'UstadController@recover');
+    Route::post('verify-code', 'UstadController@verifyCode');
+    Route::post('new-password', 'UstadController@newPassword');
+    Route::post('send-code', 'UstadController@sendCode');
+    Route::post('edit-profile', 'UstadController@editProfile');
+    Route::post('upload-image', 'UstadController@upload');
 });
