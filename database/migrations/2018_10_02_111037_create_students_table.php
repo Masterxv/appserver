@@ -19,13 +19,13 @@ class CreateStudentsTable extends Migration
             $table->String('name');
             $table->String('email');
             $table->String('password');
-            $table->String('firebaseid');
-            $table->String('logo');
+            $table->String('firebaseid')->nullable();
+            $table->String('logo')->nullable();
             $table->String('active');
-            $table->String('phone');
-            $table->String('birthday');
-            $table->String('address');
-            $table->String('code');
+            $table->String('phone')->nullable();
+            $table->String('birthday')->nullable();
+            $table->String('address')->nullable();
+            $table->String('code')->nullable();
             $table->timestamps();
         });
     }

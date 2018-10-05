@@ -73,7 +73,6 @@ class StudentController extends Controller
 
             return response()->json([
                 'error' => ['code' => 302, 'message' => $validator->messages()->first()],
-                'user' => $student,
             ], Response::HTTP_OK);
 
         }
@@ -133,17 +132,20 @@ class StudentController extends Controller
             ->where('email', '=', $request->email)
             ->where('password', '=', md5($request->password))
             ->get();
-        if (is_null($student)) {
+
+if ($student->count())
+{
+        return response()->json([
+            'error' => ['code' => Response::HTTP_OK, 'message' => false],
+            'user' => $student->first(),
+        ], Response::HTTP_OK);
+
+        }else{
+
             return response()->json([
                 'error' => ['code' => 302, 'message' => "Wrong password"],
             ], Response::HTTP_OK);
-        }
-
-        return response()->json([
-            'error' => ['code' => Response::HTTP_OK, 'message' => false],
-            'user' => $student,
-        ], Response::HTTP_OK);
-
+}
 
     }
 
@@ -161,10 +163,12 @@ class StudentController extends Controller
         ];
 
         $rules = [
-            'email' => 'exists:students'
+            'email' => 'exists:students',
+              'code' => 'required'
+
         ];
 
-        $validation = Validator::make($request->only('email'), $rules);
+        $validation = Validator::make($request->only('email','code'), $rules);
 
         if ($validation->fails()) {
 
@@ -178,17 +182,20 @@ class StudentController extends Controller
             ->where('email', '=', $request->email)
             ->where('code', '=', $request->code)
             ->get();
-        if (is_null($student)) {
-            return response()->json([
-                'error' => ['code' => 302, 'message' => "Code error"],
-                'user' => $student,
-            ], Response::HTTP_OK);
-        }
+
+            if ($student->count())
+{
 
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],
-            'user' => $student,
+            'user' => $student->first(),
         ], Response::HTTP_OK);
+
+        }else{
+                        return response()->json([
+                'error' => ['code' => 302, 'message' => "Code is Wrong"],
+            ], Response::HTTP_OK);
+        }
     }
 
     public function newPassword(Request $request)
@@ -203,9 +210,7 @@ class StudentController extends Controller
         ];
 
         $validation = Validator::make($request->only('email'), $rules);
-
         if ($validation->fails()) {
-
             return response()->json([
                 'error' => ['code' => 302, 'message' => $validation->messages()->first()],
             ], Response::HTTP_OK);
@@ -214,7 +219,7 @@ class StudentController extends Controller
 
         $student = student::select('*')
             ->where('email', '=', $request->email)
-            ->get();
+            ->get()->first();
         $student->password = md5($request->password);
         $student->update();
 
@@ -254,6 +259,7 @@ class StudentController extends Controller
         $student->code = $random;
 
         $student->update(['code' => $random]);
+
 
 //        mail('m.aliahmed0@gmail.com', 'Student App', $msg,'From: zaid.asif33@gmail.com');
 
@@ -314,8 +320,7 @@ class StudentController extends Controller
                 $student->email = $request->newEmail;
             } else {
                 return response()->json([
-                    'error' => ['code' => Response::HTTP_OK, 'message' => "Email already taken"],
-                    'user' => $student,
+                    'error' => ['code' => "302", 'message' => "Email already taken"],
                 ], Response::HTTP_OK);
             }
         }
@@ -328,16 +333,17 @@ class StudentController extends Controller
                 $student->username = $request->newUsername;
             } else {
                 return response()->json([
-                    'error' => ['code' => Response::HTTP_OK, 'message' => "Username already taken"],
-                    'user' => $student,
+                    'error' => ['code' => "302" ,'message' => "Username already taken"],
                 ], Response::HTTP_OK);
             }
 
         }
-        $student->password = $request->password;
+        $student->password = $student->password;
         $student->phone = $request->phone;
         $student->birthday = $request->birthday;
         $student->address = $request->address;
+
+        $student->name = $request->name;
 
         $student->update();
 
@@ -356,17 +362,43 @@ class StudentController extends Controller
      */
     public function upload(Request $request)
     {
+
+
+        $credentials = [
+            'email' => $request->email,
+        ];
+
+
+        $rules = [
+            'email' => 'exists:students'
+        ];
+
+        $validation = Validator::make($request->only('email'), $rules);
+
+        if ($validation->fails()) {
+
+            return response()->json([
+                'error' => ['code' => 302, 'message' => "Invalid email"],
+            ], Response::HTTP_OK);
+
+        }
+
+
+
+
+
+
         $student = student::select('*')
             ->where('email', '=', $request->email)
             ->get()->first();
 
 
-        if ($request->hasFile('logo')) {
-            $image = $request->file('logo');
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
             $name =  md5(microtime());
             $customers_path = public_path().'/uploads/customers/';
             $specified_customer_path = 'uploads/customers/'.$student;
-            if(!Storage::disk('public')->has($specified_customer_path.'/logo')){
+            if(!Storage::disk('public')->has($specified_customer_path.'/image')){
 //                $path = $customers_path.$student->email.'/logo';
 //                if (!file_exists($path)) {
 //                    mkdir($path, 0775, true);
@@ -382,10 +414,14 @@ class StudentController extends Controller
             $student->logo = $url;
             $student->update();
 
+        }else{
+             return response()->json([
+                    'error' => ['code' => Response::HTTP_OK, 'message' => "Image is null"],
+                ], Response::HTTP_OK);
         }
 
 
-        $file_data      = $request->logo;
+        // $file_data      = $request->logo;
 
 //        $customers_path = public_path().'/uploads/customers/';
 //        $specified_customer_path = 'uploads/customers/'.$student->email;
@@ -404,15 +440,18 @@ class StudentController extends Controller
 //
 //
 //        $student->update();
-
-
-        return response()->json([
-            'http-status' => Response::HTTP_OK,
-            'status' => true,
-            'message' => 'success',
-            'student' => $student,
-            'body' => ['profile_picture' => $url]
+   return response()->json([
+            'error' => ['code' => Response::HTTP_OK, 'message' => "Image successfully updated"],
+            'user' => $student,
         ], Response::HTTP_OK);
+
+        // return response()->json([
+        //     'http-status' => Response::HTTP_OK,
+        //     'status' => true,
+        //     'message' => 'success',
+        //     'student' => $student,
+        //     'body' => ['profile_picture' => $url]
+        // ], Response::HTTP_OK);
     }
 
     public function upload_image($file_data, $customer_id, $full_path)
