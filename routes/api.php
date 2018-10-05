@@ -38,3 +38,11 @@ Route::group(['prefix'=>'ustad'], function() {
     Route::post('edit-profile', 'UstadController@editProfile');
     Route::post('upload-image', 'UstadController@upload');
 });
+
+Route::group(['prefix'=>'post'], function() {
+    Route::post('make-post', 'PostController@makePost');
+    Route::get('get-all-posts', 'PostController@getAllPosts');
+    Route::post('like-post', 'PostController@likePost');
+    Route::post('unlike-post', 'PostController@unlikePost');
+    Route::post('comment-on-post', 'PostController@commentOnPost');
+});
