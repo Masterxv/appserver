@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Ustad;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Post;
@@ -31,12 +33,18 @@ class PostController extends Controller
 
     }
 
-    public function getAllPosts(){
-        $post = posts::select('*')->get();
+    public function getAllPosts()
+    {
+        $post = post::select('*')->get();
+
+        foreach ($post as $value) {
+            $ustad = Ustad::find($value->userId);
+            $value->logo = $ustad->logo;
+        }
 
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],
-            'user' => $post,
+            'posts' => $post,
         ], Response::HTTP_OK);
     }
 }
