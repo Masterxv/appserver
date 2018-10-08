@@ -39,7 +39,7 @@ class PostController extends Controller
 
         foreach ($post as $value) {
             $ustad = Ustad::find($value->userId);
-            $value->logo = $ustad->logo;
+            $value->ustad = $ustad;
         }
 
         return response()->json([

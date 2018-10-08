@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $fillable = [
-        'id','title','text','type','category','userId','time','logo'
+        'id','title','text','type','category','userId','time','ustad'
     ];
 }
