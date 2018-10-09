@@ -25,12 +25,18 @@ class LikeController extends Controller
         $like->type = 'like';
         $like->userType = $request->userType;
 
-        $like->save();
 
         $likes = like::select('*')
             ->where('postId', '=', $request->postId)
-            ->where('type', '=', 'like')
-            ->count();
+            ->where('userId', '=', $request->userId)
+            ->get()->first();
+        if ($likes !=null) {
+            $likes->type='like';
+            $likes->update();
+
+        } else {
+            $like->save();
+        }
 
         $unlikes = like::select('*')
             ->where('postId', '=', $request->postId)
@@ -52,7 +58,7 @@ class LikeController extends Controller
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => 'liked'],
             'post' => $post,
-            'myLikeStatus'=>$userLike,
+            'myLikeStatus' => $userLike,
 
         ], Response::HTTP_OK);
 
@@ -67,13 +73,17 @@ class LikeController extends Controller
         $like->userType = $request->userType;
 
 
-
-        $like->save();
-
         $likes = like::select('*')
             ->where('postId', '=', $request->postId)
-            ->where('type', '=', 'like')
-            ->count();
+            ->where('userId', '=', $request->userId)
+            ->get()->first();
+
+        if ($likes != null) {
+            $likes->type='unlike';
+            $likes->update();
+        } else {
+            $like->save();
+        }
 
         $unlikes = like::select('*')
             ->where('postId', '=', $request->postId)
@@ -95,7 +105,7 @@ class LikeController extends Controller
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => 'unliked'],
             'post' => $post,
-            'myLikeStatus'=>$userLike,
+            'myLikeStatus' => $userLike,
 
         ], Response::HTTP_OK);
 
