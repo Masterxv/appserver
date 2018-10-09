@@ -20,6 +20,7 @@ class CommentController extends Controller
         $comment->userId = $request->userId;
         $comment->time = $milliseconds = round(microtime(true));
         $comment->text = $request->text;
+        $comment->userType = $request->userType;
         $comment->save();
 
 

@@ -23,6 +23,7 @@ class LikeController extends Controller
         $like->postId = $request->postId;
         $like->userId = $request->userId;
         $like->type = 'like';
+        $like->userType = $request->userType;
 
         $like->save();
 
@@ -44,14 +45,14 @@ class LikeController extends Controller
         $post->unlikes = $unlikes;
 
         $userLike = like::select('*')
-            ->where('postId', '=', $request->postid)
+            ->where('postId', '=', $request->postId)
             ->where('userId', '=', $request->userId)
             ->get()->first();
 
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => 'liked'],
             'post' => $post,
-            'liked'=>$userLike,
+            'myLikeStatus'=>$userLike,
 
         ], Response::HTTP_OK);
 
@@ -63,6 +64,9 @@ class LikeController extends Controller
         $like->postId = $request->postId;
         $like->userId = $request->userId;
         $like->type = 'unlike';
+        $like->userType = $request->userType;
+
+
 
         $like->save();
 
@@ -75,7 +79,6 @@ class LikeController extends Controller
             ->where('postId', '=', $request->postId)
             ->where('type', '=', 'unlike')
             ->count();
-
         $post = post::select('*')
             ->where('id', '=', $request->postId)
             ->get()->first();
@@ -84,16 +87,18 @@ class LikeController extends Controller
         $post->unlikes = $unlikes;
 
         $userLike = like::select('*')
-            ->where('postId', '=', $request->postid)
+            ->where('postId', '=', $request->postId)
             ->where('userId', '=', $request->userId)
             ->get()->first();
 
+
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => 'unliked'],
-            'likes' => $likes,
-            'unlikes' => $unlikes,
-            'myLikes' => $userLike,
+            'post' => $post,
+            'myLikeStatus'=>$userLike,
+
         ], Response::HTTP_OK);
+
 
     }
 }
