@@ -130,7 +130,7 @@ class UstadController extends Controller
         $ustad = ustad::select('*')
             ->where('email', '=', $request->email)
             ->where('code', '=', $request->code)
-            ->get()->first();
+            ->get();
 
         if ($ustad->count()) {
 
@@ -176,6 +176,55 @@ class UstadController extends Controller
             'user' => $ustad,
         ], Response::HTTP_OK);
     }
+
+
+
+  public function editPassword(Request $request)
+    {
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+          'oldpassword' => $request->oldpassword
+        ];
+
+        $rules = [
+            'email' => 'exists:ustads'
+        ];
+
+        $validation = Validator::make($request->only('email'), $rules);
+        if ($validation->fails()) {
+            return response()->json([
+                'error' => ['code' => 302, 'message' => $validation->messages()->first()],
+            ], Response::HTTP_OK);
+
+        }
+
+          $ustad = ustad::select('*')
+            ->where('email', '=', $request->email)
+            ->where('password', '=', md5($request->oldpassword))
+            ->get()->first();
+
+if ($ustad!=null) {
+        $ustad->password = md5($request->password);
+        $ustad->update();
+
+            return response()->json([
+
+                'error' => ['code' => Response::HTTP_OK, 'message' => false],
+                'user' => $ustad->first(),
+            ], Response::HTTP_OK);
+
+        } else {
+
+            return response()->json([
+                'error' => ['code' => 302, 'message' => "Wrong Old password"],
+            ], Response::HTTP_OK);
+        }
+
+
+
+    }
+
 
     public function sendCode(Request $request)
     {
@@ -247,13 +296,13 @@ class UstadController extends Controller
 
         $validation = Validator::make($request->only('email'), $rules);
 
-        if ($validation->fails()) {
+        // if ($validation->fails()) {
 
-            return response()->json([
-                'error' => ['code' => 302, 'message' => "Invalid email"],
-            ], Response::HTTP_OK);
+        //     return response()->json([
+        //         'error' => ['code' => 302, 'message' => "Invalid email"],
+        //     ], Response::HTTP_OK);
 
-        }
+        // }
 
         $ustad = ustad::select('*')
             ->where('email', '=', $request->email)
@@ -287,11 +336,14 @@ class UstadController extends Controller
 
         }
         $ustad->password = $ustad->password;
-        $ustad->phone = $request->phone;
-        $ustad->birthday = $request->birthday;
-        $ustad->address = $request->address;
-
         $ustad->name = $request->name;
+        $ustad->phone = $request->phone;
+        $ustad->price = $request->price;
+        $ustad->skills = $request->skills;
+
+        $ustad->info = $request->info;
+        $ustad->category = $request->category;
+ 
 
         $ustad->update();
 

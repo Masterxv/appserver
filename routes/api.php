@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix'=>'student'], function() {
     Route::post('register', 'StudentController@register');
     Route::post('login', 'StudentController@login');
+            Route::post('edit-password', 'StudentController@editPassword');
+
     Route::post('recover', 'StudentController@recover');
     Route::post('verify-code', 'StudentController@verifyCode');
     Route::post('new-password', 'StudentController@newPassword');
@@ -37,6 +39,9 @@ Route::group(['prefix'=>'ustad'], function() {
     Route::post('send-code', 'UstadController@sendCode');
     Route::post('edit-profile', 'UstadController@editProfile');
     Route::post('upload-image', 'UstadController@upload');
+
+        Route::post('edit-password', 'UstadController@editPassword');
+
 });
 
 Route::group(['prefix'=>'post'], function() {
