@@ -22,7 +22,7 @@ class PostController extends Controller
         $post->type = $request->type;
         $post->category = $request->category;
         $post->userId = $request->userId;
-        $post->time = $milliseconds = round(microtime(true));
+        $post->time = round(microtime(true));
 
         $post->save();
 
