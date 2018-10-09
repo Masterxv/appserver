@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Ustad;
+use App\Like;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Post;
@@ -21,7 +22,7 @@ class PostController extends Controller
         $post->type = $request->type;
         $post->category = $request->category;
         $post->userId = $request->userId;
-        $post->time = microtime();
+        $post->time = $milliseconds = round(microtime(true));
 
         $post->save();
 
@@ -33,13 +34,33 @@ class PostController extends Controller
 
     }
 
-    public function getAllPosts()
+    public function getAllPosts(Request $request)
     {
+        $userId=$request->userId;
         $post = post::select('*')->get();
 
         foreach ($post as $value) {
             $ustad = Ustad::find($value->userId);
             $value->ustad = $ustad;
+            $likes = like::select('*')
+                ->where('postId', '=', $value->id)
+                ->where('type', '=', 'like')
+                ->count();
+
+            $unlikes = like::select('*')
+                ->where('postId', '=', $value->id)
+                ->where('type', '=', 'unlike')
+                ->count();
+            $value->unlikes=$unlikes;
+            $value->likes=$likes;
+
+            $userLike = like::select('*')
+                ->where('postId', '=', $value->id)
+                ->where('userId', '=', $userId)
+                ->get()->first();
+
+            $value->myLikeStatus=$userLike;
+
         }
 
         return response()->json([

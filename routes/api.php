@@ -17,10 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix'=>'student'], function() {
+Route::group(['prefix' => 'student'], function () {
     Route::post('register', 'StudentController@register');
     Route::post('login', 'StudentController@login');
-            Route::post('edit-password', 'StudentController@editPassword');
+    Route::post('edit-password', 'StudentController@editPassword');
 
     Route::post('recover', 'StudentController@recover');
     Route::post('verify-code', 'StudentController@verifyCode');
@@ -30,7 +30,7 @@ Route::group(['prefix'=>'student'], function() {
     Route::post('upload-image', 'StudentController@upload');
 });
 
-Route::group(['prefix'=>'ustad'], function() {
+Route::group(['prefix' => 'ustad'], function () {
     Route::post('register', 'UstadController@register');
     Route::post('login', 'UstadController@login');
     Route::post('recover', 'UstadController@recover');
@@ -39,15 +39,15 @@ Route::group(['prefix'=>'ustad'], function() {
     Route::post('send-code', 'UstadController@sendCode');
     Route::post('edit-profile', 'UstadController@editProfile');
     Route::post('upload-image', 'UstadController@upload');
-
-        Route::post('edit-password', 'UstadController@editPassword');
+    Route::post('edit-password', 'UstadController@editPassword');
 
 });
 
-Route::group(['prefix'=>'post'], function() {
+Route::group(['prefix' => 'post'], function () {
     Route::post('make-post', 'PostController@makePost');
     Route::post('get-all-posts', 'PostController@getAllPosts');
-    Route::post('like-post', 'PostController@likePost');
-    Route::post('unlike-post', 'PostController@unlikePost');
+    Route::post('like', 'LikeController@likePost');
+    Route::post('unlike', 'LikeController@unlikePost');
     Route::post('comment-on-post', 'PostController@commentOnPost');
 });
+
