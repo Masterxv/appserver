@@ -34,7 +34,47 @@ class PostController extends Controller
 
     }
 
-    public function getAllPosts(Request $request)
+    public function getAllPostsUstad(Request $request)
+    {
+        $userId=$request->userId;
+        $ustadId=$request->ustadId;
+        $post = post::select('*')
+         ->where('userId', '=', $ustadId)
+        ->get();
+
+        foreach ($post as $value) {
+            $ustad = Ustad::find($value->userId);
+            $value->ustad = $ustad;
+            $likes = like::select('*')
+                ->where('postId', '=', $value->id)
+                ->where('type', '=', 'like')
+                ->count();
+
+            $unlikes = like::select('*')
+                ->where('postId', '=', $value->id)
+                ->where('type', '=', 'unlike')
+                ->count();
+            $value->unlikes=$unlikes;
+            $value->likes=$likes;
+
+            $userLike = like::select('*')
+                ->where('postId', '=', $value->id)
+                ->where('userId', '=', $userId)
+                 ->where('userType', '=', $request->userType)
+
+                ->get()->first();
+
+            $value->myLikeStatus=$userLike;
+
+        }
+
+        return response()->json([
+            'error' => ['code' => Response::HTTP_OK, 'message' => false],
+            'posts' => $post,
+        ], Response::HTTP_OK);
+    }
+
+     public function getAllPosts(Request $request)
     {
         $userId=$request->userId;
         $post = post::select('*')->get();
@@ -57,6 +97,8 @@ class PostController extends Controller
             $userLike = like::select('*')
                 ->where('postId', '=', $value->id)
                 ->where('userId', '=', $userId)
+                 ->where('userType', '=', $request->userType)
+
                 ->get()->first();
 
             $value->myLikeStatus=$userLike;

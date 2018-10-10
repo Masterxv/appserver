@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Ustad;
 
 use Illuminate\Http\Request;
 use App\Comments;
@@ -39,7 +40,10 @@ class CommentController extends Controller
         $comments = comments::select('*')
             ->where('postId', '=', $request->postId)
             ->get();
-
+    foreach ($comments as $value) {
+            $ustad = Ustad::find($value->userId);
+            $value->ustad = $ustad;
+        }
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],
             'comments' => $comments,

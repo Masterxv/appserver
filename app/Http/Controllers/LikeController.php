@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Ustad;
 
 use App\Like;
 use App\Post;
@@ -29,6 +30,7 @@ class LikeController extends Controller
         $likes = like::select('*')
             ->where('postId', '=', $request->postId)
             ->where('userId', '=', $request->userId)
+            ->where('userType', '=', $request->userType)
             ->get()->first();
         if ($likes !=null) {
             $likes->type='like';
@@ -43,21 +45,38 @@ class LikeController extends Controller
             ->where('type', '=', 'unlike')
             ->count();
 
+        $likescount = like::select('*')
+            ->where('postId', '=', $request->postId)
+            ->where('type', '=', 'like')
+            ->count();
+
         $post = post::select('*')
             ->where('id', '=', $request->postId)
             ->get()->first();
 
-        $post->likes = $likes;
+        $post->likes = $likescount;
         $post->unlikes = $unlikes;
+
+        // $userLike = like::select('*')
+        //     ->where('postId', '=', $request->postId)
+        //     ->where('userId', '=', $request->userId)
+        //     ->get()->first();
+
 
         $userLike = like::select('*')
             ->where('postId', '=', $request->postId)
             ->where('userId', '=', $request->userId)
+            ->where('userType', '=', $request->userType)
             ->get()->first();
 
+
+      $ustad = Ustad::find($request->userId);
+        $post->ustad = $ustad;
+
+        $post->myLikeStatus= $userLike;
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => 'liked'],
-            'post' => $post,
+            'posts' => $post,
             'myLikeStatus' => $userLike,
 
         ], Response::HTTP_OK);
@@ -75,6 +94,8 @@ class LikeController extends Controller
 
         $likes = like::select('*')
             ->where('postId', '=', $request->postId)
+                        ->where('userType', '=', $request->userType)
+
             ->where('userId', '=', $request->userId)
             ->get()->first();
 
@@ -93,18 +114,29 @@ class LikeController extends Controller
             ->where('id', '=', $request->postId)
             ->get()->first();
 
-        $post->likes = $likes;
+        $likescount = like::select('*')
+            ->where('postId', '=', $request->postId)
+            ->where('type', '=', 'like')
+            ->count();
+        $post->likes = $likescount;
         $post->unlikes = $unlikes;
+
 
         $userLike = like::select('*')
             ->where('postId', '=', $request->postId)
+                        ->where('userType', '=', $request->userType)
+
             ->where('userId', '=', $request->userId)
             ->get()->first();
 
+  $ustad = Ustad::find($request->userId);
+        $post->ustad = $ustad;
+
+        $post->myLikeStatus= $userLike;
 
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => 'unliked'],
-            'post' => $post,
+            'posts' => $post,
             'myLikeStatus' => $userLike,
 
         ], Response::HTTP_OK);

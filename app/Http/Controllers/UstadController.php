@@ -98,6 +98,40 @@ class UstadController extends Controller
 
     }
 
+
+      public function changeStatus(Request $request)
+    {
+
+        $credentials = [
+            'email' => $request->email,
+        ];
+
+        $rules = [
+            'email' => 'exists:ustads'
+        ];
+
+        $validation = Validator::make($request->only('email'), $rules);
+
+        if ($validation->fails()) {
+
+            return response()->json([
+                'error' => ['code' => 302, 'message' => $validation->messages()->first()],
+            ], Response::HTTP_OK);
+
+        }
+
+        $ustad = ustad::select('*')
+            ->where('email', '=', $request->email)
+            ->get()->first();
+            $ustad->status=$request->status;
+            $ustad->update();
+            return response()->json([
+                'error' => ['code' => Response::HTTP_OK, 'message' => false],
+                'user' => $ustad,
+            ], Response::HTTP_OK);
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

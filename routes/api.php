@@ -21,7 +21,6 @@ Route::group(['prefix' => 'student'], function () {
     Route::post('register', 'StudentController@register');
     Route::post('login', 'StudentController@login');
     Route::post('edit-password', 'StudentController@editPassword');
-
     Route::post('recover', 'StudentController@recover');
     Route::post('verify-code', 'StudentController@verifyCode');
     Route::post('new-password', 'StudentController@newPassword');
@@ -35,6 +34,7 @@ Route::group(['prefix' => 'ustad'], function () {
     Route::post('login', 'UstadController@login');
     Route::post('recover', 'UstadController@recover');
     Route::post('verify-code', 'UstadController@verifyCode');
+    Route::post('change-status', 'UstadController@changeStatus');
     Route::post('new-password', 'UstadController@newPassword');
     Route::post('send-code', 'UstadController@sendCode');
     Route::post('edit-profile', 'UstadController@editProfile');
@@ -48,6 +48,11 @@ Route::group(['prefix' => 'post'], function () {
     Route::post('get-all-posts', 'PostController@getAllPosts');
     Route::post('like', 'LikeController@likePost');
     Route::post('unlike', 'LikeController@unlikePost');
+    
+        Route::post('getAllPostsUstad', 'LikeController@getAllPostsUstad');
+
     Route::post('comment-on-post', 'PostController@commentOnPost');
+    Route::post('postComment', 'CommentController@postComment');
+    Route::post('getPostComments', 'CommentController@getPostComments');
 });
 

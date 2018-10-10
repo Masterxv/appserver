@@ -27,6 +27,7 @@ class CreateUstadsTable extends Migration
             $table->String('info')->nullable();
             $table->String('code')->nullable();
             $table->String('price')->nullable();
+            $table->String('status')->nullable();
             $table->String('skills')->nullable();
             $table->timestamps();
         });
