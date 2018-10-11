@@ -36,7 +36,7 @@ class UstadController extends Controller
         $ustad->username = $request->username;
         $ustad->active = "yes";
         $ustad->phone = "";
-
+        $ustad->firebaseid=$request->fcmKey;
 
 
         $ustad->save();
@@ -78,23 +78,46 @@ class UstadController extends Controller
 
         }
 
+
         $ustad = ustad::select('*')
             ->where('email', '=', $request->email)
             ->where('password', '=', md5($request->password))
-            ->get();
+            ->get()->first();
 
-        if ($ustad->count()) {
+
+        if ($ustad != null) {
+
+
+            $ustad->firebaseid = $request->fcmKey;
+            $ustad->update();
+
             return response()->json([
                 'error' => ['code' => Response::HTTP_OK, 'message' => false],
-                'user' => $ustad->first(),
+                'user' => $ustad,
             ], Response::HTTP_OK);
-
         } else {
-
             return response()->json([
                 'error' => ['code' => 302, 'message' => "Wrong password"],
             ], Response::HTTP_OK);
         }
+
+//        if ($ustad->count()) {
+//
+//                $ustad->first()->firebaseid=$request->fcmKey;
+//                $ustad->update();
+//
+//            return response()->json([
+//                'error' => ['code' => Response::HTTP_OK, 'message' => false],
+//                'user' => $ustad->first(),
+//            ], Response::HTTP_OK);
+//
+//
+//        } else {
+//
+//            return response()->json([
+//                'error' => ['code' => 302, 'message' => "Wrong password"],
+//            ], Response::HTTP_OK);
+//        }
 
     }
 
@@ -224,13 +247,12 @@ class UstadController extends Controller
     }
 
 
-
-  public function editPassword(Request $request)
+    public function editPassword(Request $request)
     {
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,
-          'oldpassword' => $request->oldpassword
+            'oldpassword' => $request->oldpassword
         ];
 
         $rules = [
@@ -245,14 +267,14 @@ class UstadController extends Controller
 
         }
 
-          $ustad = ustad::select('*')
+        $ustad = ustad::select('*')
             ->where('email', '=', $request->email)
             ->where('password', '=', md5($request->oldpassword))
             ->get()->first();
 
-if ($ustad!=null) {
-        $ustad->password = md5($request->password);
-        $ustad->update();
+        if ($ustad != null) {
+            $ustad->password = md5($request->password);
+            $ustad->update();
 
             return response()->json([
 
@@ -266,7 +288,6 @@ if ($ustad!=null) {
                 'error' => ['code' => 302, 'message' => "Wrong Old password"],
             ], Response::HTTP_OK);
         }
-
 
 
     }
@@ -389,7 +410,7 @@ if ($ustad!=null) {
 
         $ustad->info = $request->info;
         $ustad->category = $request->category;
- 
+
 
         $ustad->update();
 

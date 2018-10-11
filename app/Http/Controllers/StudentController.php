@@ -80,14 +80,13 @@ class StudentController extends Controller
         $student->email = $request->email;
         $student->password = md5($request->password);
         $student->username = $request->username;
-        $student->firebaseid = "";
         $student->logo = "";
         $student->active = "";
         $student->phone = "";
         $student->birthday = "";
         $student->address = "";
         $student->code = "";
-
+        $student->firebaseid=$request->fcmKey;
 
         $student->save();
 
@@ -134,6 +133,10 @@ class StudentController extends Controller
             ->get()->first();
 
         if ($student->count()) {
+
+            $student->firebaseid=$request->fcmKey;
+            $student->save();
+
             return response()->json([
                 'error' => ['code' => Response::HTTP_OK, 'message' => false],
                 'user' => $student->first(),

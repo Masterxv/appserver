@@ -99,7 +99,7 @@ class NotificationFake implements NotificationFactory, NotificationDispatcher
      */
     public function assertNothingSent()
     {
-        PHPUnit::assertEmpty($this->notifications, 'Notifications were sent unexpectedly.');
+        PHPUnit::assertEmpty($this->notifications, 'Notification were sent unexpectedly.');
     }
 
     /**

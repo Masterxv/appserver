@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Notification;
+use App\SendPushNotification;
+use App\Student;
 use Illuminate\Http\Request;
 use App\Ustad;
 
@@ -32,8 +35,8 @@ class LikeController extends Controller
             ->where('userId', '=', $request->userId)
             ->where('userType', '=', $request->userType)
             ->get()->first();
-        if ($likes !=null) {
-            $likes->type='like';
+        if ($likes != null) {
+            $likes->type = 'like';
             $likes->update();
 
         } else {
@@ -70,10 +73,44 @@ class LikeController extends Controller
             ->get()->first();
 
 
-      $ustad = Ustad::find($request->userId);
+
+       if ($request->userType == 'ustad') {
+            $ustad = Ustad::find($post->userId);
+            $title = $ustad->name . " liked your post";
+            $ustad = Ustad::find($request->userId);
+            $send = new SendPushNotification();
+            $send->sendNotification($ustad->firebaseid,
+                $title);
+
+            $notification = new Notification();
+            $notification->title = $title;
+            $notification->fromUserId = $request->userId;
+            $notification->postId = $request->postId;
+
+            $notification->save();
+
+
+        } else if ($request->userType == 'student') {
+            $ustad = Ustad::find($post->userId);
+            $student = Student::find($request->userId);
+            $title = $student->name . " liked your post";
+            $send = new SendPushNotification();
+            $send->sendNotification($ustad->firebaseid,
+                $title);
+
+            $notification = new Notification();
+            $notification->title = $title;
+            $notification->toUserId = $post->userId;
+            $notification->fromUserId = $request->userId;
+            $notification->postId = $request->postId;
+
+            $notification->save();
+        }
+
+
         $post->ustad = $ustad;
 
-        $post->myLikeStatus= $userLike;
+        $post->myLikeStatus = $userLike;
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => 'liked'],
             'posts' => $post,
@@ -94,13 +131,12 @@ class LikeController extends Controller
 
         $likes = like::select('*')
             ->where('postId', '=', $request->postId)
-                        ->where('userType', '=', $request->userType)
-
+            ->where('userType', '=', $request->userType)
             ->where('userId', '=', $request->userId)
             ->get()->first();
 
         if ($likes != null) {
-            $likes->type='unlike';
+            $likes->type = 'unlike';
             $likes->update();
         } else {
             $like->save();
@@ -124,15 +160,51 @@ class LikeController extends Controller
 
         $userLike = like::select('*')
             ->where('postId', '=', $request->postId)
-                        ->where('userType', '=', $request->userType)
-
+            ->where('userType', '=', $request->userType)
             ->where('userId', '=', $request->userId)
             ->get()->first();
 
-  $ustad = Ustad::find($request->userId);
+//        $post=Post::find($request->postId);
+        $ustad = Ustad::find($post->userId);
         $post->ustad = $ustad;
 
-        $post->myLikeStatus= $userLike;
+        $post->myLikeStatus = $userLike;
+
+
+        if ($request->userType == 'ustad') {
+            $ustad = Ustad::find($post->userId);
+            $title = $ustad->name . " unliked your post";
+            $ustad = Ustad::find($request->userId);
+            $send = new SendPushNotification();
+            $send->sendNotification($ustad->firebaseid,
+                $title);
+
+            $notification = new Notification();
+            $notification->title = $title;
+            $notification->fromUserId = $request->userId;
+            $notification->postId = $request->postId;
+
+            $notification->save();
+
+
+        } else if ($request->userType == 'student') {
+            $ustad = Ustad::find($post->userId);
+            $student = Student::find($request->userId);
+            $title = $student->name . " unliked your post";
+            $send = new SendPushNotification();
+            $send->sendNotification($ustad->firebaseid,
+                $title);
+
+            $notification = new Notification();
+            $notification->title = $title;
+            $notification->toUserId = $post->userId;
+            $notification->fromUserId = $request->userId;
+            $notification->postId = $request->postId;
+
+            $notification->save();
+        }
+
+
 
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => 'unliked'],

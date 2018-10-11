@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Notification;
+use App\Post;
+use App\SendPushNotification;
 use App\Ustad;
 
 use Illuminate\Http\Request;
@@ -24,6 +27,40 @@ class CommentController extends Controller
         $comment->userType = $request->userType;
         $comment->save();
 
+        $post=Post::find($request->postId);
+        if ($request->userType == 'ustad') {
+            $ustad = Ustad::find($post->userId);
+            $title = $ustad->name . " commented on your post";
+            $ustad = Ustad::find($request->userId);
+            $send = new SendPushNotification();
+            $send->sendNotification($ustad->firebaseid,
+                $title);
+
+            $notification = new Notification();
+            $notification->title = $title;
+            $notification->fromUserId = $request->userId;
+            $notification->toUserId = $post->userId;
+            $notification->postId = $request->postId;
+
+            $notification->save();
+
+
+        } else if ($request->userType == 'student') {
+            $ustad = Ustad::find($post->userId);
+            $student = Student::find($request->userId);
+            $title = $student->name . " commented on your post";
+            $send = new SendPushNotification();
+            $send->sendNotification($ustad->firebaseid,
+                $title);
+
+            $notification = new Notification();
+            $notification->title = $title;
+            $notification->fromUserId = $request->userId;
+            $notification->toUserId = $post->userId;
+            $notification->postId = $request->postId;
+
+            $notification->save();
+        }
 
         $comments = comments::select('*')
             ->where('postId', '=', $request->postId)

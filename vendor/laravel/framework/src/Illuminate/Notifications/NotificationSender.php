@@ -150,7 +150,7 @@ class NotificationSender
      * Queue the given notification instances.
      *
      * @param  mixed  $notifiables
-     * @param  array[\Illuminate\Notifications\Channels\Notification]  $notification
+     * @param  array[\Illuminate\Notification\Channels\Notification]  $notification
      * @return void
      */
     protected function queueNotification($notifiables, $notification)
