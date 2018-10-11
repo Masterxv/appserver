@@ -184,7 +184,9 @@ class UstadController extends Controller
     {
         $credentials = [
             'email' => $request->email,
-            'password' => $request->password
+            'password' => $request->password,
+                        'code' => $request->code
+
         ];
 
         $rules = [
@@ -201,10 +203,20 @@ class UstadController extends Controller
 
         $ustad = ustad::select('*')
             ->where('email', '=', $request->email)
+                 ->where('code', '=', $request->code)
+
             ->get()->first();
+                       if($ustad==null){
+            return response()->json([
+                'error' => ['code' => 302, 'message' =>"The Code and email does not match"],
+            ], Response::HTTP_OK);
+
+            }else{
+
         $ustad->password = md5($request->password);
         $ustad->update();
 
+		}
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],
             'user' => $ustad,

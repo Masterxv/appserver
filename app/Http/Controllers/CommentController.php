@@ -29,6 +29,13 @@ class CommentController extends Controller
             ->where('postId', '=', $request->postId)
             ->get();
 
+                    foreach ($comments as $value) {
+            $ustad = Ustad::find($value->userId);
+            $value->ustad = $ustad;
+
+        }
+
+
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],
             'comments' => $comments,
