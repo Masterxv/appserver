@@ -49,7 +49,7 @@ Route::group(['prefix' => 'post'], function () {
     Route::post('like', 'LikeController@likePost');
     Route::post('unlike', 'LikeController@unlikePost');
 
-    Route::post('getAllPostsUstad', 'LikeController@getAllPostsUstad');
+    Route::post('getAllPostsUstad', 'PostController@getAllPostsUstad');
 
     Route::post('comment-on-post', 'PostController@commentOnPost');
     Route::post('postComment', 'CommentController@postComment');

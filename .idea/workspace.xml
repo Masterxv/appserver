@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53db7bc4-7a3b-4f3a-aaee-775e68d95fb6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/LikeController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/LikeController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/UstadController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/UstadController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/SendPushNotification.php" afterPath="$PROJECT_DIR$/app/SendPushNotification.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/api.php" afterPath="$PROJECT_DIR$/routes/api.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Notifications/NotificationSender.php" afterPath="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Notifications/NotificationSender.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Support/Testing/Fakes/NotificationFake.php" afterPath="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Support/Testing/Fakes/NotificationFake.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,8 +20,8 @@
       <file leaf-file-name="SendPushNotification.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/SendPushNotification.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="23" column="47" lean-forward="false" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
+            <state relative-caret-position="119">
+              <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -35,8 +30,8 @@
       <file leaf-file-name="LikeController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LikeController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="107" column="9" lean-forward="false" selection-start-line="107" selection-start-column="9" selection-end-line="107" selection-end-column="9" />
+            <state relative-caret-position="529">
+              <caret line="210" column="9" lean-forward="true" selection-start-line="173" selection-start-column="8" selection-end-line="210" selection-end-column="9" />
               <folding>
                 <element signature="e#40#61#0#PHP" expanded="true" />
               </folding>
@@ -44,23 +39,43 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CommentController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PostController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PostController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="714">
+              <caret line="50" column="25" lean-forward="false" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CommentController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommentController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-198">
-              <caret line="36" column="24" lean-forward="false" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
+            <state relative-caret-position="461">
+              <caret line="53" column="49" lean-forward="false" selection-start-line="53" selection-start-column="49" selection-end-line="53" selection-end-column="49" />
               <folding>
-                <element signature="e#39#60#0#PHP" expanded="true" />
+                <element signature="e#40#61#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="api.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/api.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="55" column="32" lean-forward="false" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="32" />
+            <state relative-caret-position="359">
+              <caret line="51" column="51" lean-forward="false" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="51" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NotificationsController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NotificationsController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -108,9 +123,9 @@
         <option value="$PROJECT_DIR$/database/migrations/2018_10_09_093049_alter_table_comments.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UstadController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" />
-        <option value="$PROJECT_DIR$/app/SendPushNotification.php" />
         <option value="$PROJECT_DIR$/app/Notifications.php" />
         <option value="$PROJECT_DIR$/database/migrations/2018_10_11_054234_create_notification_table.php" />
+        <option value="$PROJECT_DIR$/app/SendPushNotification.php" />
         <option value="$PROJECT_DIR$/routes/api.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/LikeController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CommentController.php" />
@@ -237,7 +252,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="SearchEverywhereHistoryKey" value="api&#9;FILE&#9;file://C:/wamp64/www/android/routes/api.php&#10;send&#9;FILE&#9;file://C:/wamp64/www/android/app/SendPushNotification.php&#10;logs&#9;null&#9;null&#10;likec&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/LikeController.php&#10;post&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/PostController.php&#10;ustad&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/UstadController.php&#10;postco&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/PostController.php&#10;ust&#9;FILE&#9;file://C:/wamp64/www/android/app/Ustad.php&#10;env&#9;FILE&#9;file://C:/wamp64/www/android/.env&#10;stude&#9;FILE&#9;file://C:/wamp64/www/android/app/Student.php&#10;auth&#9;FILE&#9;file://C:/wamp64/www/android/vendor/laravel/framework/src/Illuminate/Support/Facades/Auth.php&#10;creta&#9;FILE&#9;file://C:/wamp64/www/android/database/migrations/2014_10_12_000000_create_users_table.php&#10;web&#9;FILE&#9;file://C:/wamp64/www/android/routes/web.php" />
+    <property name="SearchEverywhereHistoryKey" value="se&#9;FILE&#9;file://C:/wamp64/www/android/app/SendPushNotification.php&#10;api&#9;FILE&#9;file://C:/wamp64/www/android/routes/api.php&#10;send&#9;FILE&#9;file://C:/wamp64/www/android/app/SendPushNotification.php&#10;logs&#9;null&#9;null&#10;likec&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/LikeController.php&#10;post&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/PostController.php&#10;ustad&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/UstadController.php&#10;postco&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/PostController.php&#10;ust&#9;FILE&#9;file://C:/wamp64/www/android/app/Ustad.php&#10;env&#9;FILE&#9;file://C:/wamp64/www/android/.env&#10;stude&#9;FILE&#9;file://C:/wamp64/www/android/app/Student.php&#10;auth&#9;FILE&#9;file://C:/wamp64/www/android/vendor/laravel/framework/src/Illuminate/Support/Facades/Auth.php&#10;creta&#9;FILE&#9;file://C:/wamp64/www/android/database/migrations/2014_10_12_000000_create_users_table.php&#10;web&#9;FILE&#9;file://C:/wamp64/www/android/routes/web.php" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -452,7 +467,7 @@
       <workItem from="1538476354411" duration="5323000" />
       <workItem from="1538543062369" duration="1858000" />
       <workItem from="1538548309848" duration="54559000" />
-      <workItem from="1539186972569" duration="13310000" />
+      <workItem from="1539186972569" duration="16694000" />
     </task>
     <task id="LOCAL-00001" summary="hello">
       <created>1538656711791</created>
@@ -500,7 +515,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75050000" />
+    <option name="totallyTimeSpent" value="78434000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -769,16 +784,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PostController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="24" column="22" lean-forward="false" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
-          <folding>
-            <element signature="e#40#53#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2018_10_09_062507_create_likes_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -847,14 +852,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/SendPushNotification.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="23" column="47" lean-forward="false" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2018_10_09_063327_create_comments_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -887,31 +884,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommentController.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NotificationsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-198">
-          <caret line="36" column="24" lean-forward="false" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
-          <folding>
-            <element signature="e#39#60#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/SendPushNotification.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="51" column="51" lean-forward="false" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PostController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="50" column="25" lean-forward="false" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/LikeController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="107" column="9" lean-forward="false" selection-start-line="107" selection-start-column="9" selection-end-line="107" selection-end-column="9" />
+        <state relative-caret-position="529">
+          <caret line="210" column="9" lean-forward="true" selection-start-line="173" selection-start-column="8" selection-end-line="210" selection-end-column="9" />
           <folding>
             <element signature="e#40#61#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommentController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="55" column="32" lean-forward="false" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="32" />
-          <folding />
+        <state relative-caret-position="461">
+          <caret line="53" column="49" lean-forward="false" selection-start-line="53" selection-start-column="49" selection-end-line="53" selection-end-column="49" />
+          <folding>
+            <element signature="e#40#61#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

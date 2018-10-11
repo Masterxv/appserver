@@ -60,11 +60,6 @@ class LikeController extends Controller
         $post->likes = $likescount;
         $post->unlikes = $unlikes;
 
-        // $userLike = like::select('*')
-        //     ->where('postId', '=', $request->postId)
-        //     ->where('userId', '=', $request->userId)
-        //     ->get()->first();
-
 
         $userLike = like::select('*')
             ->where('postId', '=', $request->postId)
@@ -73,38 +68,43 @@ class LikeController extends Controller
             ->get()->first();
 
 
+        if ($request->userType == 'ustad') {
 
-       if ($request->userType == 'ustad') {
-            $ustad = Ustad::find($post->userId);
-            $title = $ustad->name . " liked your post";
-            $ustad = Ustad::find($request->userId);
+            $user = Ustad::find($request->userId);
+            $title = $user->name . " liked your post";
             $send = new SendPushNotification();
-            $send->sendNotification($ustad->firebaseid,
-                $title);
+            $ustad = Ustad::find($post->userId);
 
-            $notification = new Notification();
-            $notification->title = $title;
-            $notification->fromUserId = $request->userId;
-            $notification->postId = $request->postId;
+            if($post->userId!=$user->id) {
+                $send->sendNotification($ustad->firebaseid,
+                    $title, $request->postId);
 
-            $notification->save();
+                $notification = new Notification();
+                $notification->title = $title;
+                $notification->fromUserId = $request->userId;
+                $notification->postId = $request->postId;
 
+                $notification->save();
+            }
 
         } else if ($request->userType == 'student') {
-            $ustad = Ustad::find($post->userId);
-            $student = Student::find($request->userId);
-            $title = $student->name . " liked your post";
+
+            $user = Ustad::find($request->userId);
+            $title = $user->name . " liked your post";
             $send = new SendPushNotification();
-            $send->sendNotification($ustad->firebaseid,
-                $title);
+            $ustad = Ustad::find($post->userId);
 
-            $notification = new Notification();
-            $notification->title = $title;
-            $notification->toUserId = $post->userId;
-            $notification->fromUserId = $request->userId;
-            $notification->postId = $request->postId;
+            if($post->userId!=$user->id) {
+                $send->sendNotification($ustad->firebaseid,
+                    $title, $request->postId);
 
-            $notification->save();
+                $notification = new Notification();
+                $notification->title = $title;
+                $notification->fromUserId = $request->userId;
+                $notification->postId = $request->postId;
+
+                $notification->save();
+            }
         }
 
 
@@ -172,38 +172,43 @@ class LikeController extends Controller
 
 
         if ($request->userType == 'ustad') {
-            $ustad = Ustad::find($post->userId);
-            $title = $ustad->name . " unliked your post";
-            $ustad = Ustad::find($request->userId);
+
+            $user = Ustad::find($request->userId);
+            $title = $user->name . " unliked your post";
             $send = new SendPushNotification();
-            $send->sendNotification($ustad->firebaseid,
-                $title);
+            $ustad = Ustad::find($post->userId);
 
-            $notification = new Notification();
-            $notification->title = $title;
-            $notification->fromUserId = $request->userId;
-            $notification->postId = $request->postId;
+            if($post->userId!=$user->id) {
+                $send->sendNotification($ustad->firebaseid,
+                    $title, $request->postId);
 
-            $notification->save();
+                $notification = new Notification();
+                $notification->title = $title;
+                $notification->fromUserId = $request->userId;
+                $notification->postId = $request->postId;
 
+                $notification->save();
+            }
 
         } else if ($request->userType == 'student') {
-            $ustad = Ustad::find($post->userId);
-            $student = Student::find($request->userId);
-            $title = $student->name . " unliked your post";
+
+            $user = Ustad::find($request->userId);
+            $title = $user->name . " unliked your post";
             $send = new SendPushNotification();
-            $send->sendNotification($ustad->firebaseid,
-                $title);
+            $ustad = Ustad::find($post->userId);
 
-            $notification = new Notification();
-            $notification->title = $title;
-            $notification->toUserId = $post->userId;
-            $notification->fromUserId = $request->userId;
-            $notification->postId = $request->postId;
+            if($post->userId!=$user->id) {
+                $send->sendNotification($ustad->firebaseid,
+                    $title, $request->postId);
 
-            $notification->save();
+                $notification = new Notification();
+                $notification->title = $title;
+                $notification->fromUserId = $request->userId;
+                $notification->postId = $request->postId;
+
+                $notification->save();
+            }
         }
-
 
 
         return response()->json([

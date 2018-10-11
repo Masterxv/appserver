@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class SendPushNotification extends Model
 {
-    public function sendNotification($sendTo,$title)
+    public function sendNotification($sendTo,$title,$postId)
     {
         $url = "https://fcm.googleapis.com/fcm/send";
         $serverKey = 'AAAARfn66B0:APA91bHSDU_gi0PDCq300t82cco2wj4CmFFPa02rLlT0Amdh1XlyohDFJ0pMaRrObfpud6SNNsujxJIpH4DC1F2w2D7attCsl62AEWvV1j_ITLdPF-0CafI4Lgs2taBgOnSBfcST0JzG';
 //        $title = "Liked your picture";
         $body = " Liked your picture on instagram";
-        $notification = array('Title' => $title, 'sound' => 'default', 'badge' => '1');
+        $notification = array('Title' => $title,'PostId'=>$postId, 'sound' => 'default', 'badge' => '1');
         $arrayToSend = array('to' => $sendTo, 'data' => $notification, 'priority' => 'high');
         $json = json_encode($arrayToSend);
         $headers = array();
