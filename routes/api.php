@@ -51,6 +51,7 @@ Route::group(['prefix' => 'post'], function () {
 
     Route::post('getAllPostsUstad', 'PostController@getAllPostsUstad');
 
+    Route::post('getAllNotification', 'NotificationsController@getAllNotification');
     Route::post('comment-on-post', 'PostController@commentOnPost');
     Route::post('postComment', 'CommentController@postComment');
     Route::post('getPostComments', 'CommentController@getPostComments');
