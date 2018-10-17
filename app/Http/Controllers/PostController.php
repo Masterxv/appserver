@@ -110,4 +110,45 @@ class PostController extends Controller
             'posts' => $post,
         ], Response::HTTP_OK);
     }
+  
+      public function getPostById(Request $request)
+    {
+        $userId=$request->userId;
+                $userType=$request->userType;
+                                $postId=$request->postId;
+        $post = post::select('*')
+         ->where('userId', '=', $userId)
+         ->where('id', '=', $postId)
+         ->get()->first();
+
+            $ustad = Ustad::find($post->userId);
+            $post->ustad = $ustad;
+            $likes = like::select('*')
+                ->where('postId', '=', $post->id)
+                ->where('type', '=', 'like')
+                ->count();
+
+            $unlikes = like::select('*')
+                ->where('postId', '=', $post->id)
+                ->where('type', '=', 'unlike')
+                ->count();
+            $post->unlikes=$unlikes;
+            $post->likes=$likes;
+
+            $userLike = like::select('*')
+                ->where('postId', '=', $post->id)
+                ->where('userId', '=', $userId)
+                 ->where('userType', '=', $request->userType)
+
+                ->get()->first();
+
+            $post->myLikeStatus=$userLike;
+
+        
+
+        return response()->json([
+            'error' => ['code' => Response::HTTP_OK, 'message' => false],
+            'posts' => $post,
+        ], Response::HTTP_OK);
+    }
 }

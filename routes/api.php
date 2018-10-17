@@ -20,13 +20,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'student'], function () {
     Route::post('register', 'StudentController@register');
     Route::post('login', 'StudentController@login');
-    Route::post('edit-password', 'StudentController@editPassword');
     Route::post('recover', 'StudentController@recover');
     Route::post('verify-code', 'StudentController@verifyCode');
     Route::post('new-password', 'StudentController@newPassword');
     Route::post('send-code', 'StudentController@sendCode');
     Route::post('edit-profile', 'StudentController@editProfile');
     Route::post('upload-image', 'StudentController@upload');
+        Route::post('edit-password', 'StudentController@editPassword');
+
 });
 
 Route::group(['prefix' => 'ustad'], function () {
@@ -48,9 +49,11 @@ Route::group(['prefix' => 'post'], function () {
     Route::post('get-all-posts', 'PostController@getAllPosts');
     Route::post('like', 'LikeController@likePost');
     Route::post('unlike', 'LikeController@unlikePost');
+    Route::post('getAllPosts', 'PostController@getAllPosts');
 
     Route::post('getAllPostsUstad', 'PostController@getAllPostsUstad');
 
+    Route::post('getPostById', 'PostController@getPostById');
     Route::post('getAllNotification', 'NotificationsController@getAllNotification');
     Route::post('comment-on-post', 'PostController@commentOnPost');
     Route::post('postComment', 'CommentController@postComment');

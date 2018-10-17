@@ -9,6 +9,6 @@ class Comments extends Model
 {
     //
     protected $fillable = [
-        'id','postId','userId','time','text'
+        'id','postId','userId','time','text',
     ];
 }

@@ -78,15 +78,40 @@ class LikeController extends Controller
             if($post->userId!=$user->id) {
                 $send->sendNotification($ustad->firebaseid,
                     $title, $request->postId);
+  $notificationold = Notification::select('*')
+            ->where('postId', '=', $request->postId)
+            ->where('type', '=', 'like')
+             ->where('userType', '=', $request->userType)
+            ->where('fromUserId', '=', $request->userId)
+            ->get()->first();
 
+                if($notificationold!=null){
+               //  $notificationold->title = $title;
+               //  $notificationold->fromUserId = $request->userId;
+               // $notificationold->toUserId = $post->userId;
+               // $notificationold->postId = $request->postId;
+               //  $notificationold->userType = $request->userType;
+               //     $notificationold->type = 'like';
+
+               //  $notificationold->update();
+                                                    $notificationold->delete();
+
+                }
+                // else{
                 $notification = new Notification();
                 $notification->title = $title;
                 $notification->fromUserId = $request->userId;
+               $notification->toUserId = $post->userId;
+        $notification->time = round(microtime(true));
+
+               $notification->type = 'like';
                 $notification->postId = $request->postId;
+        $notification->userType = $request->userType;
 
                 $notification->save();
-            }
+            // }
 
+}
         } else if ($request->userType == 'student') {
 
             $user = Ustad::find($request->userId);
@@ -98,13 +123,40 @@ class LikeController extends Controller
                 $send->sendNotification($ustad->firebaseid,
                     $title, $request->postId);
 
+    $notificationold = Notification::select('*')
+            ->where('postId', '=', $request->postId)
+            ->where('type', '=', 'like')
+             ->where('userType', '=', $request->userType)
+            ->where('fromUserId', '=', $request->userId)
+            ->get()->first();
+
+                if($notificationold!=null){
+               //  $notificationold->title = $title;
+               //  $notificationold->fromUserId = $request->userId;
+               // $notificationold->toUserId = $post->userId;
+               // $notificationold->postId = $request->postId;
+               //  $notificationold->userType = $request->userType;
+               //                 $notificationold->type = 'like';
+
+               //  $notificationold->update();
+                                                    $notificationold->delete();
+
+                }
+                // else{
                 $notification = new Notification();
                 $notification->title = $title;
+                               $notification->type = 'like';
+        $notification->time = round(microtime(true));
+
                 $notification->fromUserId = $request->userId;
                 $notification->postId = $request->postId;
+                               $notification->toUserId = $post->userId;
+
+        $notification->userType = $request->userType;
 
                 $notification->save();
-            }
+            // }
+        }
         }
 
 
@@ -177,18 +229,45 @@ class LikeController extends Controller
             $title = $user->name . " unliked your post";
             $send = new SendPushNotification();
             $ustad = Ustad::find($post->userId);
-
             if($post->userId!=$user->id) {
                 $send->sendNotification($ustad->firebaseid,
-                    $title, $request->postId);
+                $title, $request->postId);
+            
+            $notificationold = Notification::select('*')
+            ->where('postId', '=', $request->postId)
+            ->where('type', '=', 'like')
+             ->where('userType', '=', $request->userType)
+            ->where('fromUserId', '=', $request->userId)
+            ->get()->first();
+
+                if($notificationold!=null){
+               //  $notificationold->title = $title;
+               //  $notificationold->fromUserId = $request->userId;
+               // $notificationold->toUserId = $post->userId;
+               //                $notificationold->type = 'like';
+
+               // $notificationold->postId = $request->postId;
+               //  $notificationold->userType = $request->userType;
+               //  $notificationold->update();
+                                                $notificationold->delete();
+
+                }
+                // else{
+
 
                 $notification = new Notification();
                 $notification->title = $title;
+                $notification->toUserId = $post->userId;
                 $notification->fromUserId = $request->userId;
                 $notification->postId = $request->postId;
+                $notification->userType = $request->userType;
+                               $notification->type = 'like';
+        $notification->time = round(microtime(true));
+
 
                 $notification->save();
-            }
+            // }
+        }
 
         } else if ($request->userType == 'student') {
 
@@ -200,14 +279,40 @@ class LikeController extends Controller
             if($post->userId!=$user->id) {
                 $send->sendNotification($ustad->firebaseid,
                     $title, $request->postId);
+            
+            $notificationold = Notification::select('*')
+            ->where('postId', '=', $request->postId)
+            ->where('type', '=', 'like')
+             ->where('userType', '=', $request->userType)
+            ->where('fromUserId', '=', $request->userId)
+            ->get()->first();
+
+                if($notificationold!=null){
+               //  $notificationold->title = $title;
+               //  $notificationold->fromUserId = $request->userId;
+               // $notificationold->toUserId = $post->userId;
+               // $notificationold->postId = $request->postId;
+               //  $notificationold->userType = $request->userType;
+               // $notificationold->type = 'like';
+               //  $notificationold->update();
+                                                $notificationold->delete();
+
+                }
+                // else{
 
                 $notification = new Notification();
-                $notification->title = $title;
-                $notification->fromUserId = $request->userId;
-                $notification->postId = $request->postId;
 
+                               $notification->type = 'like';
+$notification->title = $title;
+                $notification->fromUserId = $request->userId;
+               $notification->toUserId = $post->userId;
+        $notification->time = round(microtime(true));
+
+                $notification->postId = $request->postId;
+                $notification->userType = $request->userType;
                 $notification->save();
-            }
+            // }
+        }
         }
 
 

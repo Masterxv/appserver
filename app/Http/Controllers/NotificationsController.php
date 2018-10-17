@@ -18,7 +18,7 @@ class NotificationsController extends Controller
             ->get();
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],
-            'comments' => $notification,
+            'notification' => $notification,
         ], Response::HTTP_OK);
     }
 }

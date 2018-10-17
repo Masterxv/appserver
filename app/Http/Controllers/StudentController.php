@@ -81,7 +81,7 @@ class StudentController extends Controller
         $student->password = md5($request->password);
         $student->username = $request->username;
         $student->logo = "";
-        $student->active = "";
+        $student->active = "yes";
         $student->phone = "";
         $student->birthday = "";
         $student->address = "";
@@ -204,6 +204,8 @@ class StudentController extends Controller
         $credentials = [
             'email' => $request->email,
             'password' => $request->password
+              'code' => $request->code
+
         ];
 
         $rules = [
@@ -220,14 +222,69 @@ class StudentController extends Controller
 
         $student = student::select('*')
             ->where('email', '=', $request->email)
+            ->where('code', '=', $request->code)
             ->get()->first();
+  
+                       if($student==null){
+            return response()->json([
+                'error' => ['code' => 302, 'message' =>"The Code and email does not match"],
+            ], Response::HTTP_OK);
+
+            }else{
+
         $student->password = md5($request->password);
         $student->update();
-
+}
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],
             'user' => $student,
         ], Response::HTTP_OK);
+    }
+
+
+      public function editPassword(Request $request)
+    {
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+            'oldpassword' => $request->oldpassword
+        ];
+
+        $rules = [
+            'email' => 'exists:ustads'
+        ];
+
+        $validation = Validator::make($request->only('email'), $rules);
+        if ($validation->fails()) {
+            return response()->json([
+                'error' => ['code' => 302, 'message' => $validation->messages()->first()],
+            ], Response::HTTP_OK);
+
+        }
+
+        $student = student::select('*')
+            ->where('email', '=', $request->email)
+            ->where('password', '=', md5($request->oldpassword))
+            ->get()->first();
+
+        if ($student != null) {
+            $student->password = md5($request->password);
+            $student->update();
+
+            return response()->json([
+
+                'error' => ['code' => Response::HTTP_OK, 'message' => false],
+                'user' => $ustad->first(),
+            ], Response::HTTP_OK);
+
+        } else {
+
+            return response()->json([
+                'error' => ['code' => 302, 'message' => "Wrong Old password"],
+            ], Response::HTTP_OK);
+        }
+
+
     }
 
     public function sendCode(Request $request)

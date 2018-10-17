@@ -40,14 +40,40 @@ class CommentController extends Controller
                 $send->sendNotification($ustad->firebaseid,
                     $title, $request->postId);
 
-                $notification = new Notification();
+  $notificationold = Notification::select('*')
+            ->where('postId', '=', $request->postId)
+            ->where('type', '=', 'comment')
+             ->where('userType', '=', $request->userType)
+            ->where('fromUserId', '=', $request->userId)
+            ->get()->first();
+
+                            if($notificationold!=null){
+                            	$notificationold->delete();
+        //         $notificationold->title = $title;
+        //         $notificationold->fromUserId = $request->userId;
+        //         $notificationold->postId = $request->postId;
+        // $notificationold->userType = $request->userType;
+        //        $notificationold->toUserId = $post->userId;
+        //                        $notificationold->type = 'comment';
+
+        //         $notificationold->update();
+            
+        }
+        // else{
+    $notification = new Notification();
                 $notification->title = $title;
                 $notification->fromUserId = $request->userId;
                 $notification->postId = $request->postId;
+        $notification->userType = $request->userType;
+               $notification->toUserId = $post->userId;
+                               $notification->type = 'comment';
+        $notification->time = round(microtime(true));
 
                 $notification->save();
-            }
+            
+        // }
 
+        }
         } else if ($request->userType == 'student') {
 
             $user = Ustad::find($request->userId);
@@ -59,14 +85,42 @@ class CommentController extends Controller
                 $send->sendNotification($ustad->firebaseid,
                     $title, $request->postId);
 
+ 		 $notificationold = Notification::select('*')
+            ->where('postId', '=', $request->postId)
+            ->where('type', '=', 'comment')
+             ->where('userType', '=', $request->userType)
+            ->where('fromUserId', '=', $request->userId)
+            ->get()->first();
+
+                            if($notificationold!=null){
+                            	$notificationold->delete();
+          //       $notificationold = new Notification();
+          //       $notificationold->title = $title;
+          //       $notificationold->fromUserId = $request->userId;
+          //       $notificationold->postId = $request->postId;
+		        // $notificationold->userType = $request->userType;
+          //      $notificationold->toUserId = $post->userId;
+          //       $notificationold->type = 'comment';
+
+          //       $notificationold->update();
+            
+        }
+        // else{
+
                 $notification = new Notification();
                 $notification->title = $title;
                 $notification->fromUserId = $request->userId;
                 $notification->postId = $request->postId;
+      		   $notification->userType = $request->userType;
+               $notification->toUserId = $post->userId;
+                $notification->type = 'comment';
+        $notification->time = round(microtime(true));
 
                 $notification->save();
-            }
-        }
+            // }
+        
+       }
+   }
 
         $comments = comments::select('*')
             ->where('postId', '=', $request->postId)

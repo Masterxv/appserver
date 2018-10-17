@@ -20,7 +20,10 @@ class CreateNotificationTable extends Migration
             $table->String('toUserId')->nullable();
             $table->String('title')->nullable();
             $table->String('postId')->nullable();
+            $table->String('userType')->nullable();
+            $table->String('time')->nullable();
 
+            $table->String('type')->nullable();
             $table->timestamps();
         });
     }
