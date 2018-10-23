@@ -22,6 +22,8 @@ class CreatePostsTable extends Migration
             $table->String('title');
             $table->String('time');
 
+            $table->String('userType');
+
             $table->timestamps();
         });
     }

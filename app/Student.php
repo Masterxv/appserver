@@ -8,6 +8,6 @@ class Student extends Model
 {
     //
     protected $fillable = [
-        'id','username','name', 'email', 'password','firebaseid','logo','active','phone','birthday','address','code'
+        'id','username','name', 'email', 'password','firebaseid','logo','active','phone','birthday','address','code','status'
     ];
 }

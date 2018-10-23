@@ -6,6 +6,7 @@ use App\Notification;
 use App\Post;
 use App\SendPushNotification;
 use App\Ustad;
+use App\Student;
 
 use Illuminate\Http\Request;
 use App\Comments;
@@ -76,12 +77,12 @@ class CommentController extends Controller
         }
         } else if ($request->userType == 'student') {
 
-            $user = Ustad::find($request->userId);
+            $user = student::find($request->userId);
             $title = $user->name . " commented on your post";
             $send = new SendPushNotification();
             $ustad = Ustad::find($post->userId);
 
-            if($post->userId!=$user->id) {
+            // if($post->userId!=$user->id) {
                 $send->sendNotification($ustad->firebaseid,
                     $title, $request->postId);
 
@@ -104,7 +105,7 @@ class CommentController extends Controller
 
           //       $notificationold->update();
             
-        }
+        // }
         // else{
 
                 $notification = new Notification();
@@ -126,12 +127,18 @@ class CommentController extends Controller
             ->where('postId', '=', $request->postId)
             ->get();
 
-        foreach ($comments as $value) {
+foreach ($comments as $value) {
+            if($value->userType==='student'){
+
+            $student = student::find($value->userId);
+             $value->ustad = $student;
+         
+            }else{
             $ustad = Ustad::find($value->userId);
             $value->ustad = $ustad;
 
+            }
         }
-
 
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],
@@ -145,8 +152,16 @@ class CommentController extends Controller
             ->where('postId', '=', $request->postId)
             ->get();
         foreach ($comments as $value) {
+            if($value->userType==='student'){
+
+            $student = student::find($value->userId);
+             $value->ustad = $student;
+         
+            }else{
             $ustad = Ustad::find($value->userId);
             $value->ustad = $ustad;
+
+            }
         }
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],

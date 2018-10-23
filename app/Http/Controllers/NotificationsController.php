@@ -14,7 +14,6 @@ class NotificationsController extends Controller
     {
         $notification = Notification::select('*')
             ->where('toUserId', '=', $request->userId)
-               ->where('userType', '=', $request->userType)
             ->get();
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],

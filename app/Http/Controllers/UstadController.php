@@ -11,14 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 use Hash, Config, Image, File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
-
-
 class UstadController extends Controller
 {
-    public function register(Request $request)
+ public function register(Request $request)
     {
-        $ustad = new ustad();
         $rules = [
             'name' => 'required',
             'email' => 'required|email|unique:ustads',
@@ -34,22 +30,23 @@ class UstadController extends Controller
             ], Response::HTTP_OK);
 
         }
-              $ustad = DB::table('students')->where('email', $request->email)->first();
-                if($ustad!=null){
+              $ustadd = DB::table('students')->where('email', $request->email)->first();
+                if($ustadd!=null){
 
                     return response()->json([
                     'error' => ['code' => 302, 'message' =>'email already exist'],
                     ], Response::HTTP_OK);
              }
 
-                $ustad = DB::table('students')->where('username', $request->email)->first();
-                if($ustad!=null){
+                $ustadd = DB::table('students')->where('username', $request->email)->first();
+                if($ustadd!=null){
 
                     return response()->json([
                     'error' => ['code' => 302, 'message' =>'username already exist'],
                     ], Response::HTTP_OK);
              }
 
+        $ustad = new ustad();
 
         $ustad->name = $request->name;
         $ustad->email = $request->email;
@@ -208,9 +205,9 @@ class UstadController extends Controller
         $ustad = ustad::select('*')
             ->where('email', '=', $request->email)
             ->where('code', '=', $request->code)
-            ->get();
+            ->get()->first();
 
-        if ($ustad->count()) {
+        if ($ustad!=null) {
 
             return response()->json([
                 'error' => ['code' => Response::HTTP_OK, 'message' => false],
@@ -533,7 +530,6 @@ class UstadController extends Controller
         }
 
     }
-    public  function ali(){
-        return "ali";
-    }
+    
+
 }

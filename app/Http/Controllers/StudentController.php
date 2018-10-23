@@ -6,7 +6,9 @@ use App\Student;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Hash, Config, Image, File, Mail;
+use Hash, Config, Image, File;
+use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
@@ -96,17 +98,17 @@ class StudentController extends Controller
                 $ustad = DB::table('ustads')->where('email', $request->email)->first();
                 if($ustad!=null){
 
-		            return response()->json([
-                	'error' => ['code' => 302, 'message' =>'email already exist'],
-        		    ], Response::HTTP_OK);
+                    return response()->json([
+                    'error' => ['code' => 302, 'message' =>'email already exist'],
+                    ], Response::HTTP_OK);
              }
 
                 $ustad = DB::table('ustads')->where('username', $request->email)->first();
                 if($ustad!=null){
 
-		            return response()->json([
-                	'error' => ['code' => 302, 'message' =>'username already exist'],
-        		    ], Response::HTTP_OK);
+                    return response()->json([
+                    'error' => ['code' => 302, 'message' =>'username already exist'],
+                    ], Response::HTTP_OK);
              }
 
 
@@ -131,6 +133,7 @@ class StudentController extends Controller
 
 
     }
+
 
 
     /**
@@ -219,7 +222,7 @@ class StudentController extends Controller
             ->where('code', '=', $request->code)
             ->get()->first();
 
-        if ($student->count()) {
+        if ($student!=null) {
 
             return response()->json([
                 'error' => ['code' => Response::HTTP_OK, 'message' => false],
@@ -232,104 +235,33 @@ class StudentController extends Controller
             ], Response::HTTP_OK);
         }
     }
-
-    public function newPassword(Request $request)
+     public function logout(Request $request)
     {
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
-<<<<<<< HEAD
-             'code' => $request->code
-=======
-            'code' => $request->code,
->>>>>>> 0f494b216bc10686f21ef62de9428afaf882555a
-
-        ];
-
-        $rules = [
-            'email' => 'exists:students'
-        ];
-
-        $validation = Validator::make($request->only('email'), $rules);
-        if ($validation->fails()) {
+        $ustad=student::find($request->userId);
+        if ($ustad==null){
             return response()->json([
-                'error' => ['code' => 302, 'message' => $validation->messages()->first()],
+                'error' => ['code' => 302, 'message' => "No user found"],
+
             ], Response::HTTP_OK);
-
-        }
-
-        $student = student::select('*')
-            ->where('email', '=', $request->email)
-            ->where('code', '=', $request->code)
-            ->get()->first();
-
-        if ($student == null) {
+        }else {
+            $ustad->firebaseid = "";
+            $ustad->status = "offline";
+            $ustad->update();
             return response()->json([
-                'error' => ['code' => 302, 'message' => "The Code and email does not match"],
-            ], Response::HTTP_OK);
+                'error' => ['code' => Response::HTTP_OK, 'message' => "Logout"],
 
-        } else {
-
-            $student->password = md5($request->password);
-            $student->update();
-        }
-        return response()->json([
-            'error' => ['code' => Response::HTTP_OK, 'message' => false],
-            'user' => $student,
-        ], Response::HTTP_OK);
-    }
-
-
-    public function editPassword(Request $request)
-    {
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
-            'oldpassword' => $request->oldpassword
-        ];
-
-        $rules = [
-            'email' => 'exists:ustads'
-        ];
-
-        $validation = Validator::make($request->only('email'), $rules);
-        if ($validation->fails()) {
-            return response()->json([
-                'error' => ['code' => 302, 'message' => $validation->messages()->first()],
-            ], Response::HTTP_OK);
-
-        }
-
-        $student = student::select('*')
-            ->where('email', '=', $request->email)
-            ->where('password', '=', md5($request->oldpassword))
-            ->get()->first();
-
-        if ($student != null) {
-            $student->password = md5($request->password);
-            $student->update();
-
-            return response()->json([
-
-                'error' => ['code' => Response::HTTP_OK, 'message' => false],
-                'user' => $ustad->first(),
-            ], Response::HTTP_OK);
-
-        } else {
-
-            return response()->json([
-                'error' => ['code' => 302, 'message' => "Wrong Old password"],
             ], Response::HTTP_OK);
         }
-
 
     }
-
-    public function sendCode(Request $request)
+      public function upload(Request $request)
     {
+
+
         $credentials = [
             'email' => $request->email,
         ];
+
 
         $rules = [
             'email' => 'exists:students'
@@ -345,35 +277,41 @@ class StudentController extends Controller
 
         }
 
+
         $student = student::select('*')
             ->where('email', '=', $request->email)
             ->get()->first();
 
-        $random = mt_rand(500000, 999999);
 
-        $msg = "Please use this code to verify your account";
-        $student->code = $random;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name = md5(microtime());
+            $customers_path = public_path() . '/uploads/customers/';
+            $specified_customer_path = 'uploads/customers/' . $student;
+            if (!Storage::disk('public')->has($specified_customer_path . '/image')) {
 
-        $student->update(['code' => $random]);
 
+            }
 
-//        mail('m.aliahmed0@gmail.com', 'Student App', $msg,'From: zaid.asif33@gmail.com');
+            $image->move($customers_path, $name . ".png");
 
+            $url = url('/') . '/uploads/customers/' . basename($name . ".png");
+            $student->logo = $url;
+            $student->update();
+
+        } else {
+            return response()->json([
+                'error' => ['code' => Response::HTTP_OK, 'message' => "Image is null"],
+            ], Response::HTTP_OK);
+        }
 
         return response()->json([
-            'error' => ['code' => Response::HTTP_OK, 'message' => "Code sent"],
+            'error' => ['code' => Response::HTTP_OK, 'message' => "Image successfully updated"],
             'user' => $student,
         ], Response::HTTP_OK);
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function editProfile(Request $request)
+    }
+ public function editProfile(Request $request)
     {
         $credentials = [
             'email' => $request->email,
@@ -449,21 +387,56 @@ class StudentController extends Controller
             'user' => $student,
         ], Response::HTTP_OK);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function upload(Request $request)
+    public function editPassword(Request $request)
     {
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+            'oldpassword' => $request->oldpassword
+        ];
+
+        $rules = [
+            'email' => 'exists:students'
+        ];
+
+        $validation = Validator::make($request->only('email'), $rules);
+        if ($validation->fails()) {
+            return response()->json([
+                'error' => ['code' => 302, 'message' => $validation->messages()->first()],
+            ], Response::HTTP_OK);
+
+        }
+
+        $student = student::select('*')
+            ->where('email', '=', $request->email)
+            ->where('password', '=', md5($request->oldpassword))
+            ->get()->first();
+
+        if ($student != null) {
+            $student->password = md5($request->password);
+            $student->update();
+
+            return response()->json([
+
+                'error' => ['code' => Response::HTTP_OK, 'message' => false],
+                'user' => $ustad->first(),
+            ], Response::HTTP_OK);
+
+        } else {
+
+            return response()->json([
+                'error' => ['code' => 302, 'message' => "Wrong Old password"],
+            ], Response::HTTP_OK);
+        }
 
 
+    }
+
+    public function sendCode(Request $request)
+    {
         $credentials = [
             'email' => $request->email,
         ];
-
 
         $rules = [
             'email' => 'exists:students'
@@ -479,40 +452,86 @@ class StudentController extends Controller
 
         }
 
-
         $student = student::select('*')
             ->where('email', '=', $request->email)
             ->get()->first();
 
+        $random = mt_rand(500000, 999999);
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $name = md5(microtime());
-            $customers_path = public_path() . '/uploads/customers/';
-            $specified_customer_path = 'uploads/customers/' . $student;
-            if (!Storage::disk('public')->has($specified_customer_path . '/image')) {
+        $msg = "Please use this code to verify your account";
+        $student->code = $random;
 
+        $student->update(['code' => $random]);
+      // mail('m.aliahmed0@gmail.com', 'ustad App', $msg,'From: zaid.asif33@gmail.com');
+      //   $data = [
+      //       'data' => $random,
 
-            }
-
-            $image->move($customers_path, $name . ".png");
-
-            $url = url('/') . '/uploads/customers/' . basename($name . ".png");
-            $student->logo = $url;
-            $student->update();
-
-        } else {
-            return response()->json([
-                'error' => ['code' => Response::HTTP_OK, 'message' => "Image is null"],
-            ], Response::HTTP_OK);
-        }
+      //   ];
+      //   ["data1" => $data];
+      //   $email = $ustad->email;
+      //   Mail::send('mail', ["data1" => $data], function ($message) use ($email) {
+      //       $message->to($email)->subject("Password reset code");
+      //       $message->from('info@ibadah.com', 'Ibadah');
+      //   });
 
         return response()->json([
-            'error' => ['code' => Response::HTTP_OK, 'message' => "Image successfully updated"],
+            'error' => ['code' => Response::HTTP_OK, 'message' => "Code sent"],
             'user' => $student,
         ], Response::HTTP_OK);
-
     }
+
+    public function newPassword(Request $request)
+    {
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+             'code' => $request->code
+        ];
+
+        $rules = [
+            'email' => 'exists:students'
+        ];
+
+        $validation = Validator::make($request->only('email'), $rules);
+        if ($validation->fails()) {
+            return response()->json([
+                'error' => ['code' => 302, 'message' => $validation->messages()->first()],
+            ], Response::HTTP_OK);
+
+        }
+
+        $student = student::select('*')
+            ->where('email', '=', $request->email)
+            ->where('code', '=', $request->code)
+            ->get()->first();
+
+        if ($student == null) {
+            return response()->json([
+                'error' => ['code' => 302, 'message' => "The Code and email does not match"],
+            ], Response::HTTP_OK);
+
+        } else {
+
+            $student->password = md5($request->password);
+            $student->update();
+        }
+        return response()->json([
+            'error' => ['code' => Response::HTTP_OK, 'message' => false],
+            'user' => $student,
+        ], Response::HTTP_OK);
+    }
+
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+   
+
 
 
 }

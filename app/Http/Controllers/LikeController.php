@@ -114,12 +114,13 @@ class LikeController extends Controller
 }
         } else if ($request->userType == 'student') {
 
-            $user = Ustad::find($request->userId);
+            $user = student::find($request->userId);
             $title = $user->name . " liked your post";
             $send = new SendPushNotification();
             $ustad = Ustad::find($post->userId);
 
-            if($post->userId!=$user->id) {
+            // if($post->userId!=$user->id  ) {
+                
                 $send->sendNotification($ustad->firebaseid,
                     $title, $request->postId);
 
@@ -156,7 +157,7 @@ class LikeController extends Controller
 
                 $notification->save();
             // }
-        }
+        // }
         }
 
 
@@ -271,12 +272,12 @@ class LikeController extends Controller
 
         } else if ($request->userType == 'student') {
 
-            $user = Ustad::find($request->userId);
+            $user = student::find($request->userId);
             $title = $user->name . " unliked your post";
             $send = new SendPushNotification();
             $ustad = Ustad::find($post->userId);
 
-            if($post->userId!=$user->id) {
+            // if($post->userId!=$user->id) {
                 $send->sendNotification($ustad->firebaseid,
                     $title, $request->postId);
             
@@ -312,7 +313,7 @@ $notification->title = $title;
                 $notification->userType = $request->userType;
                 $notification->save();
             // }
-        }
+        // }
         }
 
 

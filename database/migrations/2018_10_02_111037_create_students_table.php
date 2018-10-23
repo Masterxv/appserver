@@ -22,6 +22,8 @@ class CreateStudentsTable extends Migration
             $table->String('firebaseid')->nullable();
             $table->String('logo')->nullable();
             $table->String('active');
+                        $table->String('status')->nullable();
+
             $table->String('phone')->nullable();
             $table->String('birthday')->nullable();
             $table->String('address')->nullable();

@@ -25,6 +25,8 @@ Route::group(['prefix' => 'student'], function () {
     Route::post('login', 'StudentController@login');
     Route::post('recover', 'StudentController@recover');
     Route::post('verify-code', 'StudentController@verifyCode');
+        Route::post('logout', 'StudentController@logout');
+
     Route::post('new-password', 'StudentController@newPassword');
     Route::post('send-code', 'StudentController@sendCode');
     Route::post('edit-profile', 'StudentController@editProfile');

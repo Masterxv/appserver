@@ -22,6 +22,8 @@ class PostController extends Controller
         $post->type = $request->type;
         $post->category = $request->category;
         $post->userId = $request->userId;
+                $post->userType = $request->userType;
+
         $post->time = round(microtime(true));
 
         $post->save();
