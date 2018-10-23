@@ -6,7 +6,7 @@ use App\Student;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Hash, Config, Image, File;
+use Hash, Config, Image, File, Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
@@ -31,9 +31,25 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function send()
     {
-        //
+//        //
+//        $data=array('name'=>"ali");
+//        Mail::send(['text' => 'mail'], $data, function ($message) {
+//            $message->to('m.aliahmed0@gmail.com', 'To Ali')->subject('test mail');
+//            $message->from('zaid@gmail.com', 'zaid asif');
+//        }
+//        );
+        $data = [
+            'data' => '426597',
+
+        ];
+        ["data1" => $data];
+        Mail::send('mail', ["data1"=>$data], function ($message) {
+            $message->to('m.aliahmed0@gmail.com')->subject("Password reset code");
+            $message->from('info@ibadah.com', 'Ibadah');
+        });
+        echo "send";
     }
 
     /**
@@ -104,7 +120,7 @@ class StudentController extends Controller
         $student->birthday = "";
         $student->address = "";
         $student->code = "";
-        $student->firebaseid=$request->fcmKey;
+        $student->firebaseid = $request->fcmKey;
 
         $student->save();
 
@@ -152,7 +168,7 @@ class StudentController extends Controller
 
         if ($student!=null) {
 
-            $student->firebaseid=$request->fcmKey;
+            $student->firebaseid = $request->fcmKey;
             $student->save();
 
             return response()->json([
@@ -222,7 +238,11 @@ class StudentController extends Controller
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,
+<<<<<<< HEAD
              'code' => $request->code
+=======
+            'code' => $request->code,
+>>>>>>> 0f494b216bc10686f21ef62de9428afaf882555a
 
         ];
 
@@ -242,17 +262,17 @@ class StudentController extends Controller
             ->where('email', '=', $request->email)
             ->where('code', '=', $request->code)
             ->get()->first();
-  
-                       if($student==null){
+
+        if ($student == null) {
             return response()->json([
-                'error' => ['code' => 302, 'message' =>"The Code and email does not match"],
+                'error' => ['code' => 302, 'message' => "The Code and email does not match"],
             ], Response::HTTP_OK);
 
-            }else{
+        } else {
 
-        $student->password = md5($request->password);
-        $student->update();
-}
+            $student->password = md5($request->password);
+            $student->update();
+        }
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],
             'user' => $student,
@@ -260,7 +280,7 @@ class StudentController extends Controller
     }
 
 
-      public function editPassword(Request $request)
+    public function editPassword(Request $request)
     {
         $credentials = [
             'email' => $request->email,

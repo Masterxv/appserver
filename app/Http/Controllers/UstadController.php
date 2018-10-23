@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Ustad;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -56,7 +57,7 @@ class UstadController extends Controller
         $ustad->username = $request->username;
         $ustad->active = "yes";
         $ustad->phone = "";
-        $ustad->firebaseid=$request->fcmKey;
+        $ustad->firebaseid = $request->fcmKey;
 
 
         $ustad->save();
@@ -142,7 +143,7 @@ class UstadController extends Controller
     }
 
 
-      public function changeStatus(Request $request)
+    public function changeStatus(Request $request)
     {
 
         $credentials = [
@@ -166,12 +167,12 @@ class UstadController extends Controller
         $ustad = ustad::select('*')
             ->where('email', '=', $request->email)
             ->get()->first();
-            $ustad->status=$request->status;
-            $ustad->update();
-            return response()->json([
-                'error' => ['code' => Response::HTTP_OK, 'message' => false],
-                'user' => $ustad,
-            ], Response::HTTP_OK);
+        $ustad->status = $request->status;
+        $ustad->update();
+        return response()->json([
+            'error' => ['code' => Response::HTTP_OK, 'message' => false],
+            'user' => $ustad,
+        ], Response::HTTP_OK);
 
     }
 
@@ -228,7 +229,7 @@ class UstadController extends Controller
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,
-                        'code' => $request->code
+            'code' => $request->code
 
         ];
 
@@ -246,20 +247,19 @@ class UstadController extends Controller
 
         $ustad = ustad::select('*')
             ->where('email', '=', $request->email)
-                 ->where('code', '=', $request->code)
-
+            ->where('code', '=', $request->code)
             ->get()->first();
-                       if($ustad==null){
+        if ($ustad == null) {
             return response()->json([
-                'error' => ['code' => 302, 'message' =>"The Code and email does not match"],
+                'error' => ['code' => 302, 'message' => "The Code and email does not match"],
             ], Response::HTTP_OK);
 
-            }else{
+        } else {
 
-        $ustad->password = md5($request->password);
-        $ustad->update();
+            $ustad->password = md5($request->password);
+            $ustad->update();
 
-		}
+        }
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],
             'user' => $ustad,
@@ -346,7 +346,16 @@ class UstadController extends Controller
 
 
 //        mail('m.aliahmed0@gmail.com', 'ustad App', $msg,'From: zaid.asif33@gmail.com');
+        $data = [
+            'data' => $random,
 
+        ];
+        ["data1" => $data];
+        $email = $ustad->email;
+        Mail::send('mail', ["data1" => $data], function ($message) use ($email) {
+            $message->to($email)->subject("Password reset code");
+            $message->from('info@ibadah.com', 'Ibadah');
+        });
 
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => "Code sent"],
@@ -505,4 +514,26 @@ class UstadController extends Controller
 
     }
 
+    public function logout(Request $request)
+    {
+        $ustad=Ustad::find($request->userId);
+        if ($ustad==null){
+            return response()->json([
+                'error' => ['code' => 302, 'message' => "No user found"],
+
+            ], Response::HTTP_OK);
+        }else {
+            $ustad->firebaseid = "";
+            $ustad->status = "offline";
+            $ustad->update();
+            return response()->json([
+                'error' => ['code' => Response::HTTP_OK, 'message' => "Logout"],
+
+            ], Response::HTTP_OK);
+        }
+
+    }
+    public  function ali(){
+        return "ali";
+    }
 }
