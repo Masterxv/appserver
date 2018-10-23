@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use App\Ustad;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+
 use Hash, Config, Image, File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 
 class UstadController extends Controller
@@ -30,6 +33,23 @@ class UstadController extends Controller
             ], Response::HTTP_OK);
 
         }
+              $ustad = DB::table('students')->where('email', $request->email)->first();
+                if($ustad!=null){
+
+                    return response()->json([
+                    'error' => ['code' => 302, 'message' =>'email already exist'],
+                    ], Response::HTTP_OK);
+             }
+
+                $ustad = DB::table('students')->where('username', $request->email)->first();
+                if($ustad!=null){
+
+                    return response()->json([
+                    'error' => ['code' => 302, 'message' =>'username already exist'],
+                    ], Response::HTTP_OK);
+             }
+
+
         $ustad->name = $request->name;
         $ustad->email = $request->email;
         $ustad->password = md5($request->password);

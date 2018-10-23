@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Hash, Config, Image, File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
-
+use App\Ustad;
 use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
@@ -76,6 +77,23 @@ class StudentController extends Controller
             ], Response::HTTP_OK);
 
         }
+                $ustad = DB::table('ustads')->where('email', $request->email)->first();
+                if($ustad!=null){
+
+		            return response()->json([
+                	'error' => ['code' => 302, 'message' =>'email already exist'],
+        		    ], Response::HTTP_OK);
+             }
+
+                $ustad = DB::table('ustads')->where('username', $request->email)->first();
+                if($ustad!=null){
+
+		            return response()->json([
+                	'error' => ['code' => 302, 'message' =>'username already exist'],
+        		    ], Response::HTTP_OK);
+             }
+
+
         $student->name = $request->name;
         $student->email = $request->email;
         $student->password = md5($request->password);
@@ -132,14 +150,14 @@ class StudentController extends Controller
             ->where('password', '=', md5($request->password))
             ->get()->first();
 
-        if ($student->count()) {
+        if ($student!=null) {
 
             $student->firebaseid=$request->fcmKey;
             $student->save();
 
             return response()->json([
                 'error' => ['code' => Response::HTTP_OK, 'message' => false],
-                'user' => $student->first(),
+                'user' => $student,
             ], Response::HTTP_OK);
 
         } else {
@@ -203,8 +221,8 @@ class StudentController extends Controller
     {
         $credentials = [
             'email' => $request->email,
-            'password' => $request->password
-              'code' => $request->code
+            'password' => $request->password,
+             'code' => $request->code
 
         ];
 
