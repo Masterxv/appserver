@@ -16,8 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('send', 'StudentController@send');
+
 
 Route::group(['prefix' => 'student'], function () {
+
     Route::post('register', 'StudentController@register');
     Route::post('login', 'StudentController@login');
     Route::post('recover', 'StudentController@recover');
@@ -41,6 +44,8 @@ Route::group(['prefix' => 'ustad'], function () {
     Route::post('edit-profile', 'UstadController@editProfile');
     Route::post('upload-image', 'UstadController@upload');
     Route::post('edit-password', 'UstadController@editPassword');
+    Route::post('logout', 'UstadController@logout');
+    Route::post('ali', 'UstadController@ali');
 
 });
 
