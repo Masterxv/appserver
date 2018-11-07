@@ -25,13 +25,13 @@ Route::group(['prefix' => 'student'], function () {
     Route::post('login', 'StudentController@login');
     Route::post('recover', 'StudentController@recover');
     Route::post('verify-code', 'StudentController@verifyCode');
-        Route::post('logout', 'StudentController@logout');
+    Route::post('logout', 'StudentController@logout');
 
     Route::post('new-password', 'StudentController@newPassword');
     Route::post('send-code', 'StudentController@sendCode');
     Route::post('edit-profile', 'StudentController@editProfile');
     Route::post('upload-image', 'StudentController@upload');
-        Route::post('edit-password', 'StudentController@editPassword');
+    Route::post('edit-password', 'StudentController@editPassword');
 
 });
 
@@ -47,7 +47,8 @@ Route::group(['prefix' => 'ustad'], function () {
     Route::post('upload-image', 'UstadController@upload');
     Route::post('edit-password', 'UstadController@editPassword');
     Route::post('logout', 'UstadController@logout');
-    Route::post('ali', 'UstadController@ali');
+    Route::post('getUstad', 'UstadController@getUstad');
+    Route::post('getListOfUstad', 'UstadController@getListOfUstad');
 
 });
 

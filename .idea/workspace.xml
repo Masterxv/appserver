@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53db7bc4-7a3b-4f3a-aaee-775e68d95fb6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.env" afterPath="$PROJECT_DIR$/.env" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/UstadController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/UstadController.php" />
@@ -21,8 +20,8 @@
       <file leaf-file-name="api.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/api.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="47" column="20" lean-forward="false" selection-start-line="47" selection-start-column="17" selection-end-line="47" selection-end-column="20" />
+            <state relative-caret-position="257">
+              <caret line="50" column="65" lean-forward="false" selection-start-line="50" selection-start-column="65" selection-end-line="50" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -31,20 +30,8 @@
       <file leaf-file-name="UstadController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UstadController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3436">
-              <caret line="438" column="25" lean-forward="false" selection-start-line="438" selection-start-column="25" selection-end-line="438" selection-end-column="25" />
-              <folding>
-                <element signature="e#40#68#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Ustad.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Ustad.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="39" lean-forward="false" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="39" />
+            <state relative-caret-position="162">
+              <caret line="553" column="34" lean-forward="false" selection-start-line="553" selection-start-column="20" selection-end-line="553" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -68,6 +55,7 @@
       <find>sendCode</find>
       <find>Mailmail</find>
       <find>find</find>
+      <find>select</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -105,8 +93,8 @@
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" />
         <option value="$PROJECT_DIR$/resources/views/mail.blade.php" />
-        <option value="$PROJECT_DIR$/routes/api.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UstadController.php" />
+        <option value="$PROJECT_DIR$/routes/api.php" />
       </list>
     </option>
   </component>
@@ -208,7 +196,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../mystri" />
-    <property name="SearchEverywhereHistoryKey" value="api&#9;FILE&#9;file://C:/wamp64/www/appserver/routes/api.php&#10;ustad&#9;FILE&#9;file://C:/wamp64/www/appserver/app/Http/Controllers/UstadController.php&#10;studen&#9;FILE&#9;file://C:/wamp64/www/appserver/app/Http/Controllers/StudentController.php&#10;student&#9;FILE&#9;file://C:/wamp64/www/appserver/app/Student.php&#10;.en&#9;FILE&#9;file://C:/wamp64/www/appserver/.env&#10;se&#9;FILE&#9;file://C:/wamp64/www/android/app/SendPushNotification.php&#10;send&#9;FILE&#9;file://C:/wamp64/www/android/app/SendPushNotification.php&#10;logs&#9;null&#9;null&#10;likec&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/LikeController.php&#10;post&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/PostController.php&#10;postco&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/PostController.php&#10;ust&#9;FILE&#9;file://C:/wamp64/www/android/app/Ustad.php&#10;env&#9;FILE&#9;file://C:/wamp64/www/android/.env&#10;stude&#9;FILE&#9;file://C:/wamp64/www/android/app/Student.php&#10;auth&#9;FILE&#9;file://C:/wamp64/www/android/vendor/laravel/framework/src/Illuminate/Support/Facades/Auth.php&#10;creta&#9;FILE&#9;file://C:/wamp64/www/android/database/migrations/2014_10_12_000000_create_users_table.php&#10;web&#9;FILE&#9;file://C:/wamp64/www/android/routes/web.php" />
+    <property name="SearchEverywhereHistoryKey" value="send&#9;FILE&#9;file://C:/wamp64/www/appserver/app/SendPushNotification.php&#10;ustad&#9;FILE&#9;file://C:/wamp64/www/appserver/app/Http/Controllers/UstadController.php&#10;api&#9;FILE&#9;file://C:/wamp64/www/appserver/routes/api.php&#10;studen&#9;FILE&#9;file://C:/wamp64/www/appserver/app/Http/Controllers/StudentController.php&#10;student&#9;FILE&#9;file://C:/wamp64/www/appserver/app/Student.php&#10;.en&#9;FILE&#9;file://C:/wamp64/www/appserver/.env&#10;se&#9;FILE&#9;file://C:/wamp64/www/android/app/SendPushNotification.php&#10;logs&#9;null&#9;null&#10;likec&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/LikeController.php&#10;post&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/PostController.php&#10;postco&#9;FILE&#9;file://C:/wamp64/www/android/app/Http/Controllers/PostController.php&#10;ust&#9;FILE&#9;file://C:/wamp64/www/android/app/Ustad.php&#10;env&#9;FILE&#9;file://C:/wamp64/www/android/.env&#10;stude&#9;FILE&#9;file://C:/wamp64/www/android/app/Student.php&#10;auth&#9;FILE&#9;file://C:/wamp64/www/android/vendor/laravel/framework/src/Illuminate/Support/Facades/Auth.php&#10;creta&#9;FILE&#9;file://C:/wamp64/www/android/database/migrations/2014_10_12_000000_create_users_table.php&#10;web&#9;FILE&#9;file://C:/wamp64/www/android/routes/web.php" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -318,6 +306,8 @@
       <workItem from="1539930461763" duration="8000" />
       <workItem from="1539943874665" duration="1361000" />
       <workItem from="1539945301592" duration="2969000" />
+      <workItem from="1540311919435" duration="27000" />
+      <workItem from="1540405688001" duration="3277000" />
     </task>
     <task id="LOCAL-00001" summary="hello">
       <created>1538656711791</created>
@@ -365,7 +355,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88054000" />
+    <option name="totallyTimeSpent" value="91358000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -374,13 +364,13 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -423,7 +413,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -431,9 +420,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="731">
           <caret line="53" column="49" lean-forward="false" selection-start-line="53" selection-start-column="49" selection-end-line="53" selection-end-column="49" />
-          <folding>
-            <element signature="e#40#61#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -441,9 +427,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3383">
           <caret line="204" column="26" lean-forward="false" selection-start-line="204" selection-start-column="21" selection-end-line="204" selection-end-column="26" />
-          <folding>
-            <element signature="e#40#68#0#PHP" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -451,9 +435,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="22" column="47" lean-forward="true" selection-start-line="22" selection-start-column="47" selection-end-line="22" selection-end-column="47" />
-          <folding>
-            <element signature="e#40#61#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -461,9 +442,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1275">
           <caret line="82" column="29" lean-forward="false" selection-start-line="82" selection-start-column="29" selection-end-line="82" selection-end-column="29" />
-          <folding>
-            <element signature="e#40#61#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -471,9 +449,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#40#56#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -481,7 +456,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="1" lean-forward="false" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -496,9 +470,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#40#56#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -506,7 +477,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -690,14 +660,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/SendPushNotification.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -705,7 +667,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="714">
           <caret line="50" column="25" lean-forward="false" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -713,9 +674,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3383">
           <caret line="210" column="0" lean-forward="true" selection-start-line="173" selection-start-column="0" selection-end-line="210" selection-end-column="0" />
-          <folding>
-            <element signature="e#40#61#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -723,9 +681,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="461">
           <caret line="53" column="49" lean-forward="false" selection-start-line="53" selection-start-column="49" selection-end-line="53" selection-end-column="49" />
-          <folding>
-            <element signature="e#40#61#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -733,9 +688,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-20">
           <caret line="47" column="74" lean-forward="false" selection-start-line="47" selection-start-column="69" selection-end-line="47" selection-end-column="74" />
-          <folding>
-            <element signature="e#40#56#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -757,7 +709,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -784,21 +735,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/SendPushNotification.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="22" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/api.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="47" column="20" lean-forward="false" selection-start-line="47" selection-start-column="17" selection-end-line="47" selection-end-column="20" />
+        <state relative-caret-position="257">
+          <caret line="50" column="65" lean-forward="false" selection-start-line="50" selection-start-column="65" selection-end-line="50" selection-end-column="65" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UstadController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3436">
-          <caret line="438" column="25" lean-forward="false" selection-start-line="438" selection-start-column="25" selection-end-line="438" selection-end-column="25" />
-          <folding>
-            <element signature="e#40#68#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="162">
+          <caret line="553" column="34" lean-forward="false" selection-start-line="553" selection-start-column="20" selection-end-line="553" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>

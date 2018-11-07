@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 use Hash, Config, Image, File;
 use Illuminate\Support\Facades\Storage;
+
 class UstadController extends Controller
 {
- public function register(Request $request)
+    public function register(Request $request)
     {
         $rules = [
             'name' => 'required',
@@ -30,21 +31,21 @@ class UstadController extends Controller
             ], Response::HTTP_OK);
 
         }
-              $ustadd = DB::table('students')->where('email', $request->email)->first();
-                if($ustadd!=null){
+        $ustadd = DB::table('students')->where('email', $request->email)->first();
+        if ($ustadd != null) {
 
-                    return response()->json([
-                    'error' => ['code' => 302, 'message' =>'email already exist'],
-                    ], Response::HTTP_OK);
-             }
+            return response()->json([
+                'error' => ['code' => 302, 'message' => 'email already exist'],
+            ], Response::HTTP_OK);
+        }
 
-                $ustadd = DB::table('students')->where('username', $request->email)->first();
-                if($ustadd!=null){
+        $ustadd = DB::table('students')->where('username', $request->email)->first();
+        if ($ustadd != null) {
 
-                    return response()->json([
-                    'error' => ['code' => 302, 'message' =>'username already exist'],
-                    ], Response::HTTP_OK);
-             }
+            return response()->json([
+                'error' => ['code' => 302, 'message' => 'username already exist'],
+            ], Response::HTTP_OK);
+        }
 
         $ustad = new ustad();
 
@@ -165,6 +166,7 @@ class UstadController extends Controller
             ->where('email', '=', $request->email)
             ->get()->first();
         $ustad->status = $request->status;
+            $ustad->firebaseid = $request->firebaseid;
         $ustad->update();
         return response()->json([
             'error' => ['code' => Response::HTTP_OK, 'message' => false],
@@ -207,7 +209,7 @@ class UstadController extends Controller
             ->where('code', '=', $request->code)
             ->get()->first();
 
-        if ($ustad!=null) {
+        if ($ustad != null) {
 
             return response()->json([
                 'error' => ['code' => Response::HTTP_OK, 'message' => false],
@@ -513,13 +515,13 @@ class UstadController extends Controller
 
     public function logout(Request $request)
     {
-        $ustad=Ustad::find($request->userId);
-        if ($ustad==null){
+        $ustad = Ustad::find($request->userId);
+        if ($ustad == null) {
             return response()->json([
                 'error' => ['code' => 302, 'message' => "No user found"],
 
             ], Response::HTTP_OK);
-        }else {
+        } else {
             $ustad->firebaseid = "";
             $ustad->status = "offline";
             $ustad->update();
@@ -530,6 +532,42 @@ class UstadController extends Controller
         }
 
     }
-    
 
+
+    public function getUstad(Request $request)
+    {
+        $ustad = Ustad::find($request->ustadId);
+        if ($ustad == null) {
+            return response()->json([
+                'error' => ['code' => 302, 'message' => "No user found"],
+
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json([
+                'error' => ['code' => Response::HTTP_OK, 'message' => "ustad"],
+                'ustad' => $ustad
+
+            ], Response::HTTP_OK);
+        }
+
+    }
+
+    public function getListOfUstad(Request $request)
+    {
+        $ustad = ustad::select('*')
+            ->get();
+        if ($ustad == null) {
+            return response()->json([
+                'error' => ['code' => 302, 'message' => "No ustad found"],
+
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json([
+                'error' => ['code' => Response::HTTP_OK, 'message' => "ustad"],
+                'ustad' => $ustad
+
+            ], Response::HTTP_OK);
+        }
+
+    }
 }
