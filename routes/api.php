@@ -68,4 +68,11 @@ Route::group(['prefix' => 'post'], function () {
     Route::post('getPostComments', 'CommentController@getPostComments');
 });
 
+Route::group(['prefix' => 'order'], function () {
+    Route::post('make-order', 'OrderController@makeOrder');
+    Route::post('getStudentOrder', 'OrderController@getAllOrdersOfStudent');
+
+});
+
+
 
