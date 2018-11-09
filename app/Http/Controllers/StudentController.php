@@ -138,7 +138,7 @@ class StudentController extends Controller {
 		$student->password = md5($request->password);
 		$student->username = $request->username;
 		$student->logo = "";
-		$student->active = "yes";
+		$student->active = "active";
 		$student->phone = "";
 		$student->birthday = "";
 		$student->address = "";
@@ -521,6 +521,56 @@ class StudentController extends Controller {
 			'user' => $student,
 		], Response::HTTP_OK);
 	}
+	public function getListOfStudent(Request $request)
+    {
+        $student = student::select('*')
+            ->get();
+        if ($student == null) {
+            return response()->json([
+                'error' => ['code' => 302, 'message' => "No student found"],
+
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json([
+                'error' => ['code' => Response::HTTP_OK, 'message' => "student"],
+                'student' => $student
+
+            ], Response::HTTP_OK);
+        }
+
+    }
+     public function setstudentstatus(Request $request)
+    {
+
+        $credentials = [
+            'email' => $request->email,
+        ];
+
+        $rules = [
+            'email' => 'exists:students'
+        ];
+
+        $validation = Validator::make($request->only('email'), $rules);
+
+        if ($validation->fails()) {
+
+            return response()->json([
+                'error' => ['code' => 302, 'message' => $validation->messages()->first()],
+            ], Response::HTTP_OK);
+
+        }
+
+        $student = student::select('*')
+            ->where('email', '=', $request->email)
+            ->get()->first();
+        $student->active = $request->status;
+        $student->update();
+        return response()->json([
+            'error' => ['code' => Response::HTTP_OK, 'message' => false],
+            'user' => $student,
+        ], Response::HTTP_OK);
+
+    }
 
 	/**
 	 * Update the specified resource in storage.

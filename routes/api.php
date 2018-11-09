@@ -27,11 +27,16 @@ Route::group(['prefix' => 'student'], function () {
     Route::post('verify-code', 'StudentController@verifyCode');
     Route::post('logout', 'StudentController@logout');
 
+    Route::post('getListOfStudent', 'StudentController@getListOfStudent');
+
     Route::post('new-password', 'StudentController@newPassword');
     Route::post('send-code', 'StudentController@sendCode');
     Route::post('edit-profile', 'StudentController@editProfile');
     Route::post('upload-image', 'StudentController@upload');
     Route::post('edit-password', 'StudentController@editPassword');
+    
+    Route::post('setstudentstatus', 'StudentController@setstudentstatus');
+
 
 });
 
@@ -41,6 +46,9 @@ Route::group(['prefix' => 'ustad'], function () {
     Route::post('recover', 'UstadController@recover');
     Route::post('verify-code', 'UstadController@verifyCode');
     Route::post('change-status', 'UstadController@changeStatus');
+    
+    Route::post('setustadstatus', 'UstadController@setustadstatus');
+
     Route::post('new-password', 'UstadController@newPassword');
     Route::post('send-code', 'UstadController@sendCode');
     Route::post('edit-profile', 'UstadController@editProfile');
@@ -71,6 +79,14 @@ Route::group(['prefix' => 'post'], function () {
 Route::group(['prefix' => 'order'], function () {
     Route::post('make-order', 'OrderController@makeOrder');
     Route::post('getStudentOrder', 'OrderController@getAllOrdersOfStudent');
+    Route::post('getUstadOrder', 'OrderController@getAllOrdersOfUstad');
+
+    Route::post('setOrderStatus', 'OrderController@setOrderStatus');
+
+    Route::post('getUstadCompleteOrder', 'OrderController@getAllCompleteOrdersOfUstad');
+
+        Route::post('getOrder', 'OrderController@getOrder');
+
 
 });
 
