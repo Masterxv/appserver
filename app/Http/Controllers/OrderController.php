@@ -18,7 +18,31 @@ class OrderController extends Controller
 
     public function makeOrder(Request $request)
     {
-        $order = new order();
+    	$callStart=$request->starttime;
+    	  $callEnd=$request->endtime;
+
+        $ustadId=$request->ustadId;
+    	    $orders = order::select('*')
+         ->where('ustadId', '=', $ustadId)
+          ->where('status', '=', 'Accepted')
+        ->get();
+
+        	 $flag=false;
+        	if($orders->count()>0){
+        		return $orders->count();
+        	foreach ($orders as $order ) {
+        		$startDB=$order->starttime;
+
+        		$endDB=$order->endtime;
+
+        		if($callStart<$endDB && $callEnd>$startDB){
+        			$flag=true;
+        		
+        		}
+
+			}
+			if($flag){
+         $order = new order();
         $order->starttime = $request->starttime;
         $order->date = $request->date;
         $order->endtime = $request->endtime;
@@ -31,17 +55,50 @@ class OrderController extends Controller
 
         $order->save();
 
-        return response()->json([
-            'error' => ['code' => Response::HTTP_OK, 'message' => false],
-            'order' => $order,
-        ], Response::HTTP_OK);
+        // return response()->json([
+        //     'error' => ['code' => Response::HTTP_OK, 'message' => false],
+        //     'order' => $order,
+        // ], Response::HTTP_OK);
 
 
+
+        		}else{
+        // 			  return response()->json([
+        //     'error' => ['code' => Response::HTTP_OK, 'message' => "Please select other time"],
+        // ], Response::HTTP_OK);
+
+        		}
+
+
+
+       		
+        }else{
+ $order = new order();
+        $order->starttime = $request->starttime;
+        $order->date = $request->date;
+        $order->endtime = $request->endtime;
+        $order->totaltime = $request->totaltime;
+        $order->totalbalance = $request->totalbalance;
+        $order->ustadId = $request->ustadId;
+        $order->status = $request->status;
+        $order->service = $request->service;
+        $order->studentId = $request->studentId;
+
+        $order->save();
+        		return $order;
+
+       //  return response()->json([
+       //      'error' => ['code' => Response::HTTP_OK, 'message' => false],
+       //      'order' => $order,
+       //  ], Response::HTTP_OK);
+      	}
+      
     }
 
  public function getAllOrdersOfStudent(Request $request)
     {
-        $studentId=$request->studentId;
+    	        $studentId=$request->studentId;
+
         $order = order::select('*')
          ->where('studentId', '=', $studentId)
         ->get();
